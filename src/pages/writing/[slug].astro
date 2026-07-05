@@ -1,0 +1,22 @@
+---
+import Base from '../../layouts/Base.astro';
+import { getCollection, render } from 'astro:content';
+export async function getStaticPaths() {
+  const items = (await getCollection('posts')).filter((e) => e.data.published);
+  return items.map((entry) => ({ params: { slug: entry.id }, props: { entry } }));
+}
+const { entry } = Astro.props;
+const d = entry.data;
+const { Content } = await render(entry);
+const fmt = (x) => x.toISOString().slice(0, 10);
+---
+<Base title={`${d.title} | The Measured View`} description={d.summary}>
+  <div class="wrap detail">
+    <a class="backlink" href="/writing">← The Measured View</a>
+    <header class="detail-head">
+      <div class="kv"><span class="eyebrow">{d.tag}</span><span class="post-meta">{fmt(d.date)}{d.readingTime ? ` · ${d.readingTime}` : ''}</span></div>
+      <h1>{d.title}</h1>
+    </header>
+    <article class="prose serif"><Content /></article>
+  </div>
+</Base>

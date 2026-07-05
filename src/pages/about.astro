@@ -1,0 +1,68 @@
+---
+import Base from '../layouts/Base.astro';
+import { org, socials } from '../data/site';
+---
+<Base title="About | Blue Leaf Labs" description="Blue Leaf Labs is a registered 501(c)(3) nonprofit linking engineering, climate science, and economics to turn research into practical change — founded and run by Rohan Agarwal.">
+  <div class="wrap page-intro">
+    <span class="eyebrow">About</span>
+    <h1>About Blue Leaf Labs</h1>
+    <p>
+      Blue Leaf Labs is {org.legal}, founded and run by Rohan Agarwal. It exists to advance
+      climate systems research and open scientific education &mdash; and to put that work to public use.
+    </p>
+  </div>
+
+  <section>
+    <div class="wrap">
+      <div class="prose serif" style="max-width:72ch">
+        <p>
+          I'm Rohan Agarwal &mdash; a researcher, teacher, and performer, and a dual-enrolled sophomore
+          at Monta Vista High School and De Anza College in Cupertino, CA.
+        </p>
+        <p>
+          I believe that true change happens only when engineering innovation becomes an economic
+          driver. I founded Blue Leaf Labs to explore this space, focusing on energy, climate, and the
+          use of insightful data to drive real-world action. My work is hands-on and transparent: I
+          design prototypes, test them rigorously, and share my methods openly so others can build on
+          what I've learned. Collaboration is integral to this process, and I enjoy working with fellow
+          researchers, educators, and community groups to validate and share results.
+        </p>
+
+        <h2>Researcher</h2>
+        <p>
+          My current work searches for solutions to environmental challenges that are feasible from an
+          engineering standpoint and drive economic self-interest:
+        </p>
+        <ul>
+          <li><strong>Blue Energy:</strong> building and testing benchtop stacks for osmotic power (blue energy), with a focus on load-sweep instrumentation and real-world economic feasibility.</li>
+          <li><strong>Decision Tools:</strong> turning messy data into clear, actionable insights through single-metric visualizations and lightweight dashboards.</li>
+        </ul>
+
+        <h2>Teacher</h2>
+        <p>
+          I'm passionate about making complex ideas accessible. My teaching with Dynamic Teaching for
+          the City of Cupertino ranges from the school-year Advanced Topics in Mathematics to
+          custom-crafted summer programs in environmental engineering and scientific inquiry. Working
+          with students from fifth to twelfth grade, I invest a lot of time designing materials that
+          bring abstract concepts to life &mdash; clear examples, cheat-sheets, and small tools they can use
+          long after class ends. I'm currently designing an environmental awareness course for
+          Summer 2026.
+        </p>
+
+        <h2>Performer</h2>
+        <p>
+          Outside of engineering, I'm a musician. I play Hindustani classical tabla and Western violin,
+          and I've been singing for over a decade. My fascination with rhythm, signal, and structure in
+          music often directly informs how I approach sensors and data in the lab. You can find some of
+          my latest compositions on <a href={socials.instagram}>Instagram</a> and
+          <a href={socials.youtube}>YouTube</a>.
+        </p>
+      </div>
+
+      <div class="held" style="margin-top:2.5rem">
+        <strong>Note (remove before launch):</strong> This page carries your first-person founder
+        narrative. The purpose clause in the footer is the legal statement; this is the human one.
+      </div>
+    </div>
+  </section>
+</Base>

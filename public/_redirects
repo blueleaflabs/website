@@ -1,0 +1,6 @@
+# Cloudflare Pages redirects.
+# Research projects, /about, and the legal pages keep their exact old paths,
+# so they need no redirects. Only the blog moved (/blog + /post/* -> /writing).
+
+/blog                /writing              301
+/post/*              /writing/:splat       301

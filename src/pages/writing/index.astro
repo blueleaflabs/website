@@ -1,0 +1,31 @@
+---
+import Base from '../../layouts/Base.astro';
+import { getCollection } from 'astro:content';
+const posts = (await getCollection('posts'))
+  .filter((p) => p.data.published)
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+const fmt = (d) => d.toISOString().slice(0, 10);
+---
+<Base title="The Measured View | Blue Leaf Labs" description="Straight talk on environmental challenges, engineering innovations to solve them, and economic incentives to drive adoption.">
+  <div class="wrap page-intro">
+    <h1>The Measured View</h1>
+    <p>Straight talk on environmental challenges, engineering innovations to solve them, and economic incentives to drive adoption.</p>
+  </div>
+  <section>
+    <div class="wrap">
+      {posts.length === 0 ? (
+        <div class="ledger"><div class="lrow"><div class="lcell body" style="border-left:none">New writing is on the way.</div></div></div>
+      ) : (
+        <div class="ledger">
+          {posts.map((p) => (
+            <a class="lrow tight" href={`/writing/${p.id}`}>
+              <div class="lcell label"><span class="post-date">{fmt(p.data.date)}</span></div>
+              <div class="lcell body"><span class="post-title">{p.data.title}</span></div>
+              <div class="lcell meta"><span class="post-meta">{p.data.tag}{p.data.readingTime ? ` · ${p.data.readingTime}` : ''}</span></div>
+            </a>
+          ))}
+        </div>
+      )}
+    </div>
+  </section>
+</Base>

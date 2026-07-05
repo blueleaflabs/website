@@ -1,0 +1,50 @@
+---
+import Base from '../../layouts/Base.astro';
+import { getCollection } from 'astro:content';
+
+const items = (await getCollection('research'))
+  .filter((p) => p.data.published)
+  .sort((a, b) => a.data.order - b.data.order);
+const projects = items.filter((p) => p.data.kind === 'project');
+const analyses = items.filter((p) => p.data.kind === 'analysis');
+---
+<Base title="Research | Blue Leaf Labs" description="Open climate-systems research from Blue Leaf Labs — projects and analyses with real methods, data, and code.">
+  <div class="wrap page-intro">
+    <h1>Research</h1>
+    <p>Independent investigations into climate systems &mdash; hydroclimate dynamics, heat risk, and water-energy systems. Each entry documents the question, the method, the data, and the code.</p>
+  </div>
+
+  <section>
+    <div class="wrap">
+      {projects.length > 0 && (
+        <>
+          <div class="sec-head"><div class="sec-head-l"><h2>Projects</h2><p class="sec-sub">Sustained investigations.</p></div></div>
+          <div class="ledger" style="margin-bottom:3rem">
+            {projects.map((p) => (
+              <a class="lrow tight" href={`/research/${p.id}`}>
+                <div class="lcell label"><span class="lname">{p.data.title}</span></div>
+                <div class="lcell body"><p class="ldesc" style="margin:0">{p.data.summary}</p></div>
+                <div class="lcell meta"><span class={`status ${p.data.status.toLowerCase()}`}>{p.data.status}</span></div>
+              </a>
+            ))}
+          </div>
+        </>
+      )}
+
+      {analyses.length > 0 && (
+        <>
+          <div class="sec-head"><div class="sec-head-l"><h2>Analyses</h2><p class="sec-sub">Shorter, focused pieces.</p></div></div>
+          <div class="ledger">
+            {analyses.map((p) => (
+              <a class="lrow tight" href={`/research/${p.id}`}>
+                <div class="lcell label"><span class="lname">{p.data.title}</span></div>
+                <div class="lcell body"><p class="ldesc" style="margin:0">{p.data.summary}</p></div>
+                <div class="lcell meta"><span class={`status ${p.data.status.toLowerCase()}`}>{p.data.status}</span></div>
+              </a>
+            ))}
+          </div>
+        </>
+      )}
+    </div>
+  </section>
+</Base>

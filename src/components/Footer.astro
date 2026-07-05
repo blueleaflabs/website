@@ -1,0 +1,45 @@
+---
+import { org, socials, nav } from '../data/site';
+const year = new Date().getFullYear();
+---
+<footer class="site">
+  <div class="wrap">
+    <div class="foot-grid">
+      <div>
+        <a class="brand" href="/" style="margin-bottom:1rem">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M12 2C7 6 7 15 12 22C17 15 17 6 12 2Z" fill="#0E6B5D"/>
+            <path d="M12 4.5V20" stroke="#F2F2EC" stroke-width="1.1"/>
+          </svg>
+          Blue Leaf Labs
+        </a>
+        <p class="purpose">&ldquo;{org.purpose}&rdquo;</p>
+      </div>
+      <div>
+        <p class="foot-note">Explore</p>
+        <ul class="foot-links">
+          {nav.map((s) => (<li><a href={s.path}>{s.label}</a></li>))}
+          <li><a href="/get-involved">Get involved</a></li>
+        </ul>
+      </div>
+      <div>
+        <p class="foot-note">Elsewhere</p>
+        <ul class="foot-links">
+          <li><a href={socials.github}>GitHub</a></li>
+          <li><a href={socials.orcid}>ORCID</a></li>
+          <li><a href={socials.scholar}>Google Scholar</a></li>
+          <li><a href={`mailto:${org.email}`}>{org.email}</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="colophon">
+      <span>Blue Leaf Labs &mdash; {org.legal}.</span>
+      <span>
+        <a href="/terms-conditions" style="text-decoration:none;color:inherit">Terms</a> ·
+        <a href="/privacy-policy" style="text-decoration:none;color:inherit">Privacy</a> ·
+        <a href="/accessibility-statement" style="text-decoration:none;color:inherit">Accessibility</a>
+        &nbsp; © {year} Blue Leaf Labs
+      </span>
+    </div>
+  </div>
+</footer>

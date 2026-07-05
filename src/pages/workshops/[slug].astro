@@ -1,0 +1,30 @@
+---
+import Base from '../../layouts/Base.astro';
+import { getCollection, render } from 'astro:content';
+export async function getStaticPaths() {
+  const items = (await getCollection('workshops')).filter((e) => e.data.published);
+  return items.map((entry) => ({ params: { slug: entry.id }, props: { entry } }));
+}
+const { entry } = Astro.props;
+const d = entry.data;
+const { Content } = await render(entry);
+---
+<Base title={`${d.title} | Watt Workshops`} description={d.summary}>
+  <div class="wrap detail">
+    <a class="backlink" href="/workshops">← Watt Workshops</a>
+    <header class="detail-head"><h1>{d.title}</h1><p class="detail-summary">{d.summary}</p></header>
+    <div class="detail-grid">
+      <div class="prose"><Content /></div>
+      <aside class="glance" aria-label="Workshop at a glance">
+        <h2>At a glance</h2>
+        {d.audience && <div class="g-item"><div class="g-key">Audience</div><div class="g-val">{d.audience}</div></div>}
+        {d.level && <div class="g-item"><div class="g-key">Level</div><div class="g-val">{d.level}</div></div>}
+        {d.format && <div class="g-item"><div class="g-key">Format</div><div class="g-val">{d.format}</div></div>}
+        {d.duration && <div class="g-item"><div class="g-key">Duration</div><div class="g-val">{d.duration}</div></div>}
+        {d.location && <div class="g-item"><div class="g-key">Location</div><div class="g-val">{d.location}</div></div>}
+        {d.nextSession && <div class="g-item"><div class="g-key">Next session</div><div class="g-val">{d.nextSession}</div></div>}
+        {d.materials && <div class="g-item"><div class="g-key">Materials</div><div class="g-val">{d.materials}</div></div>}
+      </aside>
+    </div>
+  </div>
+</Base>

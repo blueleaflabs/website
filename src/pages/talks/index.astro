@@ -1,0 +1,31 @@
+---
+import Base from '../../layouts/Base.astro';
+import { getCollection } from 'astro:content';
+const items = (await getCollection('talks'))
+  .filter((t) => t.data.published)
+  .sort((a, b) => (b.data.date?.valueOf() ?? 0) - (a.data.date?.valueOf() ?? 0));
+const fmt = (x) => (x ? x.toISOString().slice(0, 10) : '');
+---
+<Base title="Talks & Interviews | Blue Leaf Labs" description="Speaking engagements and interviews from Blue Leaf Labs.">
+  <div class="wrap page-intro">
+    <h1>Talks &amp; interviews</h1>
+    <p>Bringing the work to public audiences &mdash; speaking engagements, each paired with the interviews and coverage around it.</p>
+  </div>
+  <section>
+    <div class="wrap">
+      {items.length === 0 ? (
+        <div class="ledger"><div class="lrow"><div class="lcell body" style="border-left:none">Upcoming engagements will appear here.</div></div></div>
+      ) : (
+        <div class="ledger">
+          {items.map((t) => (
+            <a class="lrow tight" href={`/talks/${t.id}`}>
+              <div class="lcell label"><span class="post-date">{fmt(t.data.date)}</span></div>
+              <div class="lcell body"><span class="post-title">{t.data.title}</span><p class="ldesc" style="margin:.2rem 0 0">{t.data.event ?? ''}</p></div>
+              <div class="lcell meta"><span class="post-meta">{t.data.location ?? ''}</span></div>
+            </a>
+          ))}
+        </div>
+      )}
+    </div>
+  </section>
+</Base>

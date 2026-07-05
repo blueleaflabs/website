@@ -1,0 +1,43 @@
+---
+import Base from '../../layouts/Base.astro';
+import { getCollection, render } from 'astro:content';
+
+export async function getStaticPaths() {
+  const items = (await getCollection('research')).filter((e) => e.data.published);
+  return items.map((entry) => ({ params: { slug: entry.id }, props: { entry } }));
+}
+
+const { entry } = Astro.props;
+const d = entry.data;
+const { Content } = await render(entry);
+---
+<Base title={`${d.title} | Blue Leaf Labs`} description={d.summary}>
+  <div class="wrap detail">
+    <a class="backlink" href="/research">← Research</a>
+
+    <header class="detail-head">
+      <div class="kv">
+        <span class="eyebrow">{d.kind === 'analysis' ? 'Analysis' : 'Project'}</span>
+        <span class={`status ${d.status.toLowerCase()}`}>{d.status}</span>
+      </div>
+      <h1>{d.title}</h1>
+      {d.question && <p class="detail-summary">{d.question}</p>}
+    </header>
+
+    <div class="detail-grid">
+      <div class="prose">
+        <Content />
+      </div>
+
+      <aside class="glance" aria-label="Research at a glance">
+        <h2>Research at a glance</h2>
+        <div class="g-item"><div class="g-key">Status</div><div class="g-val">{d.status}</div></div>
+        {d.methods && <div class="g-item"><div class="g-key">Primary methods</div><div class="g-val">{d.methods}</div></div>}
+        {d.dataSources && <div class="g-item"><div class="g-key">Data sources</div><div class="g-val">{d.dataSources}</div></div>}
+        {d.outputs && <div class="g-item"><div class="g-key">Outputs</div><div class="g-val">{d.outputs}</div></div>}
+        {d.repo && <div class="g-item"><div class="g-key">Code</div><div class="g-val"><a href={d.repo}>{d.repo.replace('https://github.com/', 'github.com/')}</a></div></div>}
+        <div class="g-item"><div class="g-key">Publication</div><div class="g-val">{d.publicationUrl ? <a href={d.publicationUrl}>Read the paper →</a> : 'Coming soon'}</div></div>
+      </aside>
+    </div>
+  </div>
+</Base>

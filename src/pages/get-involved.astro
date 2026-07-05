@@ -1,0 +1,36 @@
+---
+import Base from '../layouts/Base.astro';
+import { org, socials } from '../data/site';
+---
+<Base title="Get involved | Blue Leaf Labs" description="Collaborate with Blue Leaf Labs on research, teaching, or public talks.">
+  <div class="wrap page-intro">
+    <span class="eyebrow">Get involved</span>
+    <h1>Work with Blue Leaf Labs</h1>
+    <p>Blue Leaf Labs is an independent 501(c)(3) nonprofit and open to collaborators. If any of the below fits, get in touch.</p>
+  </div>
+  <section>
+    <div class="wrap">
+      <div class="pillars">
+        <div class="pcard" style="cursor:default">
+          <h3>Research</h3>
+          <p>Collaborate on an open investigation, share a dataset, or point me toward a problem worth measuring.</p>
+        </div>
+        <div class="pcard" style="cursor:default">
+          <h3>Teaching</h3>
+          <p>Bring a hands-on technical workshop to your students, program, or community group.</p>
+        </div>
+        <div class="pcard" style="cursor:default">
+          <h3>Talks</h3>
+          <p>Invite a talk on climate systems, clean energy, and the economics of adoption &mdash; or request an interview.</p>
+        </div>
+      </div>
+      <div class="band" style="margin-top:2rem">
+        <div>
+          <h2>Reach out</h2>
+          <p>The fastest way to start a conversation is email.</p>
+        </div>
+        <a class="btn btn-primary" href={`mailto:${org.email}`}>{org.email}</a>
+      </div>
+    </div>
+  </section>
+</Base>

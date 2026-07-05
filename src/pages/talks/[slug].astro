@@ -1,0 +1,31 @@
+---
+import Base from '../../layouts/Base.astro';
+import { getCollection, render } from 'astro:content';
+export async function getStaticPaths() {
+  const items = (await getCollection('talks')).filter((e) => e.data.published);
+  return items.map((entry) => ({ params: { slug: entry.id }, props: { entry } }));
+}
+const { entry } = Astro.props;
+const d = entry.data;
+const { Content } = await render(entry);
+const fmt = (x) => (x ? x.toISOString().slice(0, 10) : '');
+---
+<Base title={`${d.title} | Blue Leaf Labs`} description={d.summary}>
+  <div class="wrap detail">
+    <a class="backlink" href="/talks">← Talks &amp; interviews</a>
+    <header class="detail-head"><h1>{d.title}</h1><p class="detail-summary">{d.summary}</p></header>
+    <div class="detail-grid">
+      <div class="prose"><Content /></div>
+      <aside class="glance" aria-label="Talk at a glance">
+        <h2>At a glance</h2>
+        {d.event && <div class="g-item"><div class="g-key">Event</div><div class="g-val">{d.event}</div></div>}
+        {d.date && <div class="g-item"><div class="g-key">Date</div><div class="g-val">{fmt(d.date)}</div></div>}
+        {d.location && <div class="g-item"><div class="g-key">Location</div><div class="g-val">{d.location}</div></div>}
+        {d.audience && <div class="g-item"><div class="g-key">Audience</div><div class="g-val">{d.audience}</div></div>}
+        {d.slidesUrl && <div class="g-item"><div class="g-key">Slides</div><div class="g-val"><a href={d.slidesUrl}>View slides →</a></div></div>}
+        {d.videoUrl && <div class="g-item"><div class="g-key">Video</div><div class="g-val"><a href={d.videoUrl}>Watch →</a></div></div>}
+        {d.interviewUrl && <div class="g-item"><div class="g-key">Paired interview</div><div class="g-val"><a href={d.interviewUrl}>{d.interviewOutlet ?? 'Interview'}{d.interviewFormat ? ` (${d.interviewFormat})` : ''} →</a></div></div>}
+      </aside>
+    </div>
+  </div>
+</Base>

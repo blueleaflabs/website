@@ -1,0 +1,32 @@
+---
+import { nav } from '../data/site';
+const path = Astro.url.pathname;
+const isCurrent = (p: string) => path === p || path.startsWith(p + '/');
+---
+<header class="site">
+  <div class="wrap nav">
+    <a class="brand" href="/">
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M12 2C7 6 7 15 12 22C17 15 17 6 12 2Z" fill="#0E6B5D"/>
+        <path d="M12 4.5V20" stroke="#F2F2EC" stroke-width="1.1"/>
+        <path d="M12 9L15 7M12 13L15 11M12 9L9 7M12 13L9 11" stroke="#F2F2EC" stroke-width="1" stroke-linecap="round"/>
+      </svg>
+      Blue Leaf Labs
+    </a>
+    <button class="menu-btn" aria-expanded="false" aria-controls="nav-links">Menu</button>
+    <nav class="nav-links" id="nav-links" aria-label="Primary">
+      {nav.map((s) => (
+        <a href={s.path} aria-current={isCurrent(s.path) ? 'page' : undefined}>{s.label}</a>
+      ))}
+      <a class="nav-cta" href="/get-involved">Get involved</a>
+    </nav>
+  </div>
+</header>
+<script>
+  const btn = document.querySelector('.menu-btn');
+  const links = document.getElementById('nav-links');
+  btn?.addEventListener('click', () => {
+    const open = links?.classList.toggle('open');
+    btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+  });
+</script>

@@ -1,0 +1,101 @@
+---
+import Base from '../layouts/Base.astro';
+import { getCollection } from 'astro:content';
+import { org } from '../data/site';
+
+const projects = (await getCollection('research'))
+  .filter((p) => p.data.published)
+  .sort((a, b) => a.data.order - b.data.order);
+---
+<Base>
+  <!-- HERO -->
+  <div class="hero">
+    <div class="wrap hero-grid">
+      <div class="fade">
+        <span class="eyebrow">Registered 501(c)(3) nonprofit</span>
+        <h1>Climate systems research, documented in the open.</h1>
+        <p class="lede">
+          I'm Rohan Agarwal, and I founded Blue Leaf Labs to study climate systems &mdash;
+          hydroclimate dynamics, heat risk, and water-energy systems &mdash; through data-driven
+          analysis, environmental modeling, and applied engineering, with real methods, data, and
+          code behind every project.
+        </p>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="/research">See the research</a>
+          <a class="btn btn-ghost" href="/about">Why this exists</a>
+        </div>
+      </div>
+
+      <aside class="readout fade d1" aria-label="Organization summary">
+        <div class="r-head"><span>// Blue Leaf Labs — manifest</span><span class="r-dot" aria-hidden="true"></span></div>
+        <div class="r-row"><span class="r-key">STATUS</span><span class="r-lead" aria-hidden="true"></span><span class="r-val"><span class="hl">Active</span></span></div>
+        <div class="r-row"><span class="r-key">CLASS</span><span class="r-lead" aria-hidden="true"></span><span class="r-val">501(c)(3) nonprofit</span></div>
+        <div class="r-row"><span class="r-key">FOCUS</span><span class="r-lead" aria-hidden="true"></span><span class="r-val">Climate systems</span></div>
+        <div class="r-row"><span class="r-key">PROJECTS</span><span class="r-lead" aria-hidden="true"></span><span class="r-val">{String(projects.length).padStart(2, '0')}</span></div>
+        <div class="r-row"><span class="r-key">METHODS</span><span class="r-lead" aria-hidden="true"></span><span class="r-val">Open data &amp; code</span></div>
+        <div class="r-row"><span class="r-key">EST</span><span class="r-lead" aria-hidden="true"></span><span class="r-val">{org.founded}</span></div>
+      </aside>
+    </div>
+  </div>
+
+  <!-- RESEARCH -->
+  <section aria-labelledby="research">
+    <div class="wrap">
+      <div class="sec-head">
+        <div class="sec-head-l">
+          <h2 id="research">Research</h2>
+          <p class="sec-sub">Open investigations &mdash; real methods, data, and code, checkable end to end.</p>
+        </div>
+        <a class="more" href="/research">All projects →</a>
+      </div>
+      <div class="ledger">
+        {projects.map((p) => (
+          <a class="lrow tight" href={`/research/${p.id}`}>
+            <div class="lcell label"><span class="lname">{p.data.title}</span></div>
+            <div class="lcell body"><p class="ldesc" style="margin:0">{p.data.summary}</p></div>
+            <div class="lcell meta"><span class={`status ${p.data.status.toLowerCase()}`}>{p.data.status}</span></div>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- HOW I WORK -->
+  <section aria-labelledby="how">
+    <div class="wrap">
+      <div class="sec-head">
+        <div class="sec-head-l">
+          <h2 id="how">How I work</h2>
+          <p class="sec-sub">Every project is built to be reproduced and checked, not just read.</p>
+        </div>
+      </div>
+      <div class="principles">
+        <div class="principle">
+          <h3>Reproducible workflows</h3>
+          <p>Run-from-scratch pipelines with pinned data sources.</p>
+        </div>
+        <div class="principle">
+          <h3>Transparent assumptions</h3>
+          <p>Documented indices, thresholds, and hyperparameters used in analysis and modeling.</p>
+        </div>
+        <div class="principle">
+          <h3>Traceable sources</h3>
+          <p>Explicit dataset versions and preprocessing steps.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section>
+    <div class="wrap">
+      <div class="band">
+        <div>
+          <h2>Bring the work to your students or your stage.</h2>
+          <p>Blue Leaf Labs is independent and open to collaborators &mdash; on research, teaching, or public talks.</p>
+        </div>
+        <a class="btn btn-primary" href="/get-involved">Get involved</a>
+      </div>
+    </div>
+  </section>
+</Base>
