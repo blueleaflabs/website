@@ -6,6 +6,15 @@ const isCurrent = (p: string) => path === p || path.startsWith(p + '/');
 const projects = (await getCollection('research'))
   .filter((p) => p.data.published)
   .sort((a, b) => a.data.order - b.data.order);
+const flyoutMap: Record<string, { label: string; href: string; more?: boolean }[]> = {
+  '/research': [
+    ...projects.map((p) => ({ label: p.data.title, href: `/research/${p.id}` })),
+    { label: 'All research →', href: '/research', more: true },
+  ],
+  '/workshops': [
+    { label: 'Watt Workshops', href: '/watt-workshops' },
+  ],
+};
 ---
 <header class="site">
   <div class="wrap nav">
@@ -15,19 +24,19 @@ const projects = (await getCollection('research'))
     </a>
     <button class="menu-btn" aria-expanded="false" aria-controls="nav-links">Menu</button>
     <nav class="nav-links" id="nav-links" aria-label="Primary">
-      {nav.map((s) => (
-        s.path === '/research' && projects.length > 0 ? (
+      {nav.map((s) => {
+        const items = flyoutMap[s.path];
+        return items && items.length ? (
           <span class="nav-item has-flyout">
             <a href={s.path} aria-current={isCurrent(s.path) ? 'page' : undefined}>{s.label}</a>
             <span class="flyout">
-              {projects.map((p) => (<a href={`/research/${p.id}`}>{p.data.title}</a>))}
-              <a class="flyout-all" href="/research">All research →</a>
+              {items.map((it) => (<a href={it.href} class={it.more ? 'flyout-all' : undefined}>{it.label}</a>))}
             </span>
           </span>
         ) : (
           <a href={s.path} aria-current={isCurrent(s.path) ? 'page' : undefined}>{s.label}</a>
-        )
-      ))}
+        );
+      })}
       <a class="nav-cta" href="/get-involved">Get involved</a>
     </nav>
   </div>

@@ -6,9 +6,6 @@ import { org } from '../data/site';
 const projects = (await getCollection('research'))
   .filter((p) => p.data.published)
   .sort((a, b) => a.data.order - b.data.order);
-const workshops = (await getCollection('workshops'))
-  .filter((w) => w.data.published)
-  .sort((a, b) => a.data.order - b.data.order);
 ---
 <Base>
   <!-- HERO -->
@@ -64,28 +61,24 @@ const workshops = (await getCollection('workshops'))
   </section>
 
   <!-- WORKSHOPS -->
-  {workshops.length > 0 && (
-    <section aria-labelledby="workshops">
-      <div class="wrap">
-        <div class="sec-head">
-          <div class="sec-head-l">
-            <h2 id="workshops">Watt Workshops</h2>
-            <p class="sec-sub">Hands-on sessions that teach real technical methods, not just concepts.</p>
-          </div>
-          <a class="more" href="/workshops">All workshops →</a>
+  <section aria-labelledby="workshops">
+    <div class="wrap">
+      <div class="sec-head">
+        <div class="sec-head-l">
+          <h2 id="workshops">Watt Workshops</h2>
+          <p class="sec-sub">Hands-on environmental engineering, taught in small cohorts.</p>
         </div>
-        <div class="ledger">
-          {workshops.map((w) => (
-            <a class="lrow tight" href={`/workshops/${w.id}`}>
-              <div class="lcell label"><span class="lname">{w.data.title}</span></div>
-              <div class="lcell body"><p class="ldesc" style="margin:0">{w.data.summary}</p></div>
-              <div class="lcell meta">{w.data.level && <span class="status">{w.data.level}</span>}</div>
-            </a>
-          ))}
-        </div>
+        <a class="more" href="/watt-workshops">Explore →</a>
       </div>
-    </section>
-  )}
+      <div class="ledger">
+        <a class="lrow tight" href="/watt-workshops">
+          <div class="lcell label"><span class="lname">Watt Workshops</span></div>
+          <div class="lcell body"><p class="ldesc" style="margin:0">A five-day camp for grades 7 to 10: learn how engineers move water, beat the heat, and generate clean energy, then design your own answer to a real climate challenge.</p></div>
+          <div class="lcell meta"><span class="status">Enrolling</span></div>
+        </a>
+      </div>
+    </div>
+  </section>
 
   <!-- HOW I WORK -->
   <section aria-labelledby="how">

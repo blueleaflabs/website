@@ -1,0 +1,98 @@
+---
+import Base from '../layouts/Base.astro';
+const mailto = 'mailto:rohan.agarwal@blueleaflabs.org?subject=' + encodeURIComponent('Watt Workshops - next cohort');
+---
+<Base title="Watt Workshops | Blue Leaf Labs" description="Watt Workshops is a hands-on environmental engineering camp for grades 7 to 10: five days from first principles to a project you research, design, and present.">
+  <div class="wrap ww">
+    <section class="ww-hero">
+      <span class="ww-eyebrow">Watt Workshops · Environmental engineering camp</span>
+      <h1>Climate change isn't just a cause. It's an engineering problem.</h1>
+      <p class="ww-lede">You already know the power of protests, petitions, and policy. Watt Workshops adds the missing half: the science and engineering behind real climate solutions. Over five days you'll learn how engineers move and clean water, beat the heat, and generate clean energy, then put it all to work designing your own answer to a real-world environmental challenge.</p>
+      <div class="ww-cta-row">
+        <a class="ww-btn" href={mailto}>Save your spot</a>
+        <span class="ww-next">Next cohort starts July 13 · Just 8 seats</span>
+      </div>
+      <div class="ww-tags">
+        <span class="ww-tag">Build · Test · Improve</span>
+        <span class="ww-tag">Real engineering tools</span>
+        <span class="ww-tag">Solve a real climate problem</span>
+        <span class="ww-tag">Present your own solution</span>
+      </div>
+    </section>
+
+    <div class="ww-glance">
+      <div class="ww-gi"><div class="k">Who</div><div class="v">Grades 7-10</div></div>
+      <div class="ww-gi"><div class="k">When</div><div class="v">5 days · 2 hrs/day</div></div>
+      <div class="ww-gi"><div class="k">Group</div><div class="v">Just 8 students</div></div>
+      <div class="ww-gi"><div class="k">Bring</div><div class="v">Laptop + pen</div></div>
+    </div>
+
+    <section class="ww-sec">
+      <h2>Your week at Watt</h2>
+      <p class="ww-secsub">Five days from first principles to a project you present.</p>
+      <div class="ww-week">
+        <div class="ww-day"><div class="ww-num"><span class="dow">Mon</span><span class="dn">1</span></div><div><div class="dt">What is environmental engineering?</div><div class="dd">Get the lay of the land: how engineers tackle real climate problems with science and design. Then dive into a debate on fossil fuels and the future of energy.</div></div></div>
+        <div class="ww-day"><div class="ww-num"><span class="dow">Tue</span><span class="dn">2</span></div><div><div class="dt">Water, heat, and your voice</div><div class="dd">Explore how we move, clean, and cool, the core of water and heat engineering. In the afternoon, sharpen your public-speaking and policy skills so your ideas actually land.</div></div></div>
+        <div class="ww-day"><div class="ww-num"><span class="dow">Wed</span><span class="dn">3</span></div><div><div class="dt">Clean energy solutions</div><div class="dd">Investigate solar, wind, hydro, geothermal, and biofuel through real case studies from around the globe. Then draw your Scenario Challenge and start your investigation.</div></div></div>
+        <div class="ww-day"><div class="ww-num"><span class="dow">Thu</span><span class="dn">4</span></div><div><div class="dt">Research and build</div><div class="dd">A fast crash course in how to research like a pro, then a full work session to dig into your scenario and design your solution poster.</div></div></div>
+        <div class="ww-day"><div class="ww-num"><span class="dow">Fri</span><span class="dn">5</span></div><div><div class="dt">Present and celebrate</div><div class="dd">Present your Scenario Solution poster to the group, then close out by exploring where engineering meets policy, and how to take your idea to a science fair.</div></div></div>
+      </div>
+    </section>
+
+    <section class="ww-sec">
+      <h2>What you'll walk away with</h2>
+      <div class="ww-outcomes">
+        <div class="ww-oc"><div class="ot">A solution poster you present</div><div class="od">A real, portfolio-worthy project you research, design, and defend in front of the group.</div></div>
+        <div class="ww-oc"><div class="ot">Hands-on engineering skills</div><div class="od">Work with real environmental tools and the Define-Measure-Build-Test-Improve design loop.</div></div>
+        <div class="ww-oc"><div class="ot">Confidence speaking up</div><div class="od">Practice public speaking and persuasion so you can pitch ideas and advocate clearly.</div></div>
+        <div class="ww-oc"><div class="ot">A launchpad for science fairs</div><div class="od">Leave with a project and the know-how to carry it into competitions and beyond.</div></div>
+      </div>
+    </section>
+
+    <section class="ww-band">
+      <h2>Ready to engineer the future?</h2>
+      <p>Save your spot in the cohort starting July 13. Seats are capped at eight, so every student gets hands-on time.</p>
+      <a class="ww-btn" href={mailto}>Save your spot</a>
+      <div class="ww-online">A self-paced online course is on the way as the video lectures are built. Email us to be notified when it opens.</div>
+    </section>
+  </div>
+</Base>
+<style>
+  .ww{padding-bottom:3.5rem}
+  .ww-eyebrow{font-family:'IBM Plex Mono',monospace;font-size:.72rem;font-weight:500;letter-spacing:.16em;text-transform:uppercase;color:var(--accent)}
+  .ww-hero{padding:2.5rem 0 2.2rem}
+  .ww-hero h1{font-size:clamp(2.2rem,5.6vw,3.4rem);max-width:22ch;margin:.7rem 0 0;letter-spacing:-.02em}
+  .ww-lede{font-size:clamp(1.05rem,2.2vw,1.2rem);color:var(--ink-2);max-width:78ch;margin:1.15rem 0 0;line-height:1.6}
+  .ww-cta-row{display:flex;align-items:center;gap:1.1rem;flex-wrap:wrap;margin-top:1.6rem}
+  .ww-next{font-family:'IBM Plex Mono',monospace;font-size:.82rem;color:var(--ink-2)}
+  .ww-btn{display:inline-block;font-family:'IBM Plex Mono',monospace;font-size:.82rem;font-weight:500;letter-spacing:.04em;text-decoration:none;color:var(--paper);background:var(--accent);padding:.75rem 1.3rem;border-radius:var(--radius)}
+  .ww-btn:hover{background:var(--accent-deep)}
+  .ww-tags{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:1.6rem}
+  .ww-tag{font-family:'IBM Plex Mono',monospace;font-size:.7rem;letter-spacing:.06em;text-transform:uppercase;color:var(--accent-deep);background:color-mix(in srgb,var(--accent) 8%,var(--paper-raised));border:1px solid color-mix(in srgb,var(--accent) 25%,var(--line));border-radius:100px;padding:.35rem .7rem}
+  .ww-glance{background:var(--readout-bg);color:var(--readout-ink);border-radius:10px;display:grid;grid-template-columns:1fr;gap:1.1rem;padding:1.4rem 1.6rem;margin-bottom:3rem}
+  .ww-gi .k{font-family:'IBM Plex Mono',monospace;font-size:.66rem;letter-spacing:.11em;text-transform:uppercase;color:var(--readout-dim);margin-bottom:.4rem}
+  .ww-gi .v{font-size:1.15rem;font-weight:600}
+  .ww-gi+.ww-gi{border-top:1px solid rgba(255,255,255,.1);padding-top:1.1rem}
+  @media (min-width:680px){.ww-glance{grid-template-columns:repeat(4,1fr);gap:1.6rem}.ww-gi+.ww-gi{border-top:none;border-left:1px solid rgba(255,255,255,.12);padding-top:0;padding-left:1.4rem}}
+  .ww-sec{margin-bottom:3rem}
+  .ww-sec>h2{font-size:clamp(1.6rem,4vw,2rem)}
+  .ww-sec>h2::before{content:"";display:block;width:36px;height:3px;background:var(--accent);border-radius:2px;margin-bottom:.85rem}
+  .ww-secsub{color:var(--ink-2);margin:.4rem 0 0;font-size:1.05rem}
+  .ww-week{display:flex;flex-direction:column;gap:.8rem;margin-top:1.5rem}
+  .ww-day{display:grid;grid-template-columns:auto 1fr;gap:1.2rem;background:var(--paper-raised);border:1px solid var(--line);border-radius:9px;padding:1.15rem 1.35rem;align-items:start}
+  .ww-num{display:flex;flex-direction:column;align-items:center;justify-content:center;width:64px;flex:none;border-right:1px solid var(--line);padding-right:1.1rem}
+  .ww-num .dow{font-family:'IBM Plex Mono',monospace;font-size:.68rem;letter-spacing:.1em;color:var(--accent)}
+  .ww-num .dn{font-size:1.7rem;font-weight:600;line-height:1;color:var(--accent-deep)}
+  .ww-day .dt{font-size:1.12rem;font-weight:600}
+  .ww-day .dd{color:var(--ink-2);margin-top:.35rem;font-size:1rem}
+  .ww-outcomes{display:grid;grid-template-columns:1fr;gap:.9rem;margin-top:1.5rem}
+  @media (min-width:640px){.ww-outcomes{grid-template-columns:1fr 1fr}}
+  .ww-oc{background:var(--paper-raised);border:1px solid var(--line);border-radius:9px;padding:1.25rem 1.35rem}
+  .ww-oc .ot{font-size:1.1rem;font-weight:600}
+  .ww-oc .od{color:var(--ink-2);margin-top:.4rem;font-size:1rem}
+  .ww-band{background:color-mix(in srgb,var(--accent) 7%,var(--paper-raised));border:1px solid color-mix(in srgb,var(--accent) 25%,var(--line));border-top:3px solid var(--accent);border-radius:12px;padding:2.2rem clamp(1.4rem,4vw,2.5rem);text-align:center}
+  .ww-band h2{font-size:clamp(1.6rem,4vw,2.1rem)}
+  .ww-band p{color:var(--ink-2);margin:.6rem auto 0;max-width:56ch}
+  .ww-band .ww-btn{margin-top:1.4rem}
+  .ww-online{font-family:'IBM Plex Mono',monospace;font-size:.82rem;color:var(--ink-2);margin-top:1.4rem;padding-top:1.2rem;border-top:1px solid color-mix(in srgb,var(--accent) 22%,var(--line))}
+</style>

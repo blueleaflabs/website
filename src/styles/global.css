@@ -48,7 +48,7 @@ header.site{position:sticky;top:0;z-index:10;background:color-mix(in srgb,var(--
 .hero{border-bottom:1.5px solid var(--ink)}
 .hero-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:clamp(1.5rem,4vw,3.5rem);align-items:center;padding:clamp(3rem,7vw,5.5rem) 0}
 .hero h1{font-size:clamp(2.3rem,5.2vw,3.9rem);max-width:16ch;margin-top:1rem}
-.hero .lede{margin-top:1.4rem;font-size:clamp(1.05rem,1.6vw,1.22rem);color:var(--ink-2);max-width:48ch}
+.hero .lede{margin-top:1.4rem;font-size:clamp(1.05rem,1.6vw,1.22rem);color:var(--ink-2);max-width:74ch}
 .hero-actions{display:flex;flex-wrap:wrap;gap:.75rem;margin-top:2rem}
 .btn{display:inline-block;text-decoration:none;font-weight:500;font-size:.95rem;padding:.7rem 1.15rem;border-radius:var(--radius);border:1.5px solid var(--ink);transition:background .15s,color .15s,border-color .15s}
 .btn-primary{background:var(--accent);border-color:var(--accent);color:#fff}
@@ -70,7 +70,7 @@ section{padding:clamp(3.25rem,6.5vw,5rem) 0}
 .sec-head{display:flex;align-items:flex-end;justify-content:space-between;gap:1rem 1.5rem;flex-wrap:wrap;margin-bottom:1.5rem}
 .sec-head-l::before{content:"";display:block;width:34px;height:3px;background:var(--accent);border-radius:2px;margin-bottom:.95rem}
 .sec-head h2{font-size:clamp(1.85rem,3.4vw,2.6rem);line-height:1.02}
-.sec-sub{color:var(--ink-2);font-size:1.02rem;margin-top:.45rem;max-width:56ch}
+.sec-sub{color:var(--ink-2);font-size:1.02rem;margin-top:.45rem;max-width:74ch}
 .sec-head .more{text-decoration:none;font-family:'IBM Plex Mono',monospace;font-size:.8rem;color:var(--accent);border-bottom:1px solid transparent;white-space:nowrap;padding-bottom:.4rem}
 .sec-head .more:hover{border-color:var(--accent)}
 
@@ -229,7 +229,7 @@ section{padding:clamp(3.25rem,6.5vw,5rem) 0}
 /* page intro (index + simple pages) */
 .page-intro{padding:clamp(2.5rem,5vw,4rem) 0 0}
 .page-intro h1{font-size:clamp(2rem,4.2vw,3rem)}
-.page-intro p{color:var(--ink-2);font-size:1.12rem;margin-top:1rem;max-width:60ch}
+.page-intro p{color:var(--ink-2);font-size:1.12rem;margin-top:1rem;max-width:74ch}
 
 /* figure component */
 .fig{margin:1.8rem 0}
