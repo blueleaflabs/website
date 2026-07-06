@@ -1,7 +1,11 @@
 ---
 import { nav } from '../data/site';
+import { getCollection } from 'astro:content';
 const path = Astro.url.pathname;
 const isCurrent = (p: string) => path === p || path.startsWith(p + '/');
+const projects = (await getCollection('research'))
+  .filter((p) => p.data.published)
+  .sort((a, b) => a.data.order - b.data.order);
 ---
 <header class="site">
   <div class="wrap nav">
@@ -12,7 +16,17 @@ const isCurrent = (p: string) => path === p || path.startsWith(p + '/');
     <button class="menu-btn" aria-expanded="false" aria-controls="nav-links">Menu</button>
     <nav class="nav-links" id="nav-links" aria-label="Primary">
       {nav.map((s) => (
-        <a href={s.path} aria-current={isCurrent(s.path) ? 'page' : undefined}>{s.label}</a>
+        s.path === '/research' && projects.length > 0 ? (
+          <span class="nav-item has-flyout">
+            <a href={s.path} aria-current={isCurrent(s.path) ? 'page' : undefined}>{s.label}</a>
+            <span class="flyout">
+              {projects.map((p) => (<a href={`/research/${p.id}`}>{p.data.title}</a>))}
+              <a class="flyout-all" href="/research">All research →</a>
+            </span>
+          </span>
+        ) : (
+          <a href={s.path} aria-current={isCurrent(s.path) ? 'page' : undefined}>{s.label}</a>
+        )
       ))}
       <a class="nav-cta" href="/get-involved">Get involved</a>
     </nav>

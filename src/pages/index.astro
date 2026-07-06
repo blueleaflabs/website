@@ -6,6 +6,9 @@ import { org } from '../data/site';
 const projects = (await getCollection('research'))
   .filter((p) => p.data.published)
   .sort((a, b) => a.data.order - b.data.order);
+const workshops = (await getCollection('workshops'))
+  .filter((w) => w.data.published)
+  .sort((a, b) => a.data.order - b.data.order);
 ---
 <Base>
   <!-- HERO -->
@@ -59,6 +62,30 @@ const projects = (await getCollection('research'))
       </div>
     </div>
   </section>
+
+  <!-- WORKSHOPS -->
+  {workshops.length > 0 && (
+    <section aria-labelledby="workshops">
+      <div class="wrap">
+        <div class="sec-head">
+          <div class="sec-head-l">
+            <h2 id="workshops">Watt Workshops</h2>
+            <p class="sec-sub">Hands-on sessions that teach real technical methods, not just concepts.</p>
+          </div>
+          <a class="more" href="/workshops">All workshops →</a>
+        </div>
+        <div class="ledger">
+          {workshops.map((w) => (
+            <a class="lrow tight" href={`/workshops/${w.id}`}>
+              <div class="lcell label"><span class="lname">{w.data.title}</span></div>
+              <div class="lcell body"><p class="ldesc" style="margin:0">{w.data.summary}</p></div>
+              <div class="lcell meta">{w.data.level && <span class="status">{w.data.level}</span>}</div>
+            </a>
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
 
   <!-- HOW I WORK -->
   <section aria-labelledby="how">

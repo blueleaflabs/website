@@ -34,6 +34,15 @@ header.site{position:sticky;top:0;z-index:10;background:color-mix(in srgb,var(--
 .nav-cta{text-decoration:none;font-family:'IBM Plex Mono',monospace;font-size:.8rem;font-weight:500;letter-spacing:.04em;color:var(--paper);background:var(--ink);padding:.5rem .85rem;border-radius:var(--radius)}
 .nav-cta:hover{background:var(--accent-deep);border-color:transparent}
 .menu-btn{display:none;margin-left:auto;background:none;border:1px solid var(--rule);border-radius:var(--radius);padding:.45rem .6rem;font-family:'IBM Plex Mono',monospace;font-size:.8rem;cursor:pointer;color:var(--ink)}
+.nav-item{position:relative;display:inline-flex;align-items:center}
+.flyout{display:none}
+@media (min-width:861px){
+  .flyout{position:absolute;top:100%;left:0;min-width:250px;flex-direction:column;background:var(--paper-raised);border:1px solid var(--rule);border-radius:8px;box-shadow:0 20px 44px -26px rgba(10,30,25,.55);padding:.4rem;z-index:60}
+  .has-flyout:hover .flyout,.has-flyout:focus-within .flyout{display:flex}
+  .nav-links .flyout a{display:block;padding:.5rem .7rem;border:none;border-radius:6px;color:var(--ink);font-size:.9rem;font-weight:500;white-space:nowrap}
+  .nav-links .flyout a:hover{background:color-mix(in srgb,var(--accent) 9%,var(--paper-raised));color:var(--accent-deep);border:none}
+  .nav-links .flyout .flyout-all{margin-top:.25rem;padding-top:.6rem;border-top:1px solid var(--line);border-radius:0;color:var(--accent-deep);font-family:'IBM Plex Mono',monospace;font-size:.78rem;letter-spacing:.02em}
+}
 
 /* hero */
 .hero{border-bottom:1.5px solid var(--ink)}
@@ -292,6 +301,7 @@ html{scroll-behavior:auto}
   .nav-links.open{display:flex;position:absolute;top:64px;left:0;right:0;flex-direction:column;gap:0;background:var(--paper);border-bottom:1px solid var(--rule);padding:.5rem var(--gutter) 1rem}
   .nav-links.open a{padding:.7rem 0;border-bottom:1px solid var(--line);width:100%}
   .nav-links.open .nav-cta{margin-top:.75rem;text-align:center}
+  .nav-links.open .nav-item{display:block;width:100%}
   .menu-btn{display:block}
 }
 @media (max-width:640px){
