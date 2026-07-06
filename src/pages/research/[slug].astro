@@ -1,9 +1,9 @@
 ---
 import Base from '../../layouts/Base.astro';
 import { getCollection, render } from 'astro:content';
-import HeroImage from '../../components/HeroImage.astro';
 import Figure from '../../components/Figure.astro';
 import YouTube from '../../components/YouTube.astro';
+import { galleryImages } from '../../lib/images';
 
 export async function getStaticPaths() {
   const items = (await getCollection('research')).filter((e) => e.data.published);
@@ -13,6 +13,20 @@ export async function getStaticPaths() {
 const { entry } = Astro.props;
 const d = entry.data;
 const { Content } = await render(entry);
+
+const gallery = galleryImages(d.imagePrefix);
+const repoShort = d.repo ? d.repo.replace('https://github.com/', 'github.com/').replace(/\/$/, '') : null;
+const pubShort = d.publicationUrl ? d.publicationUrl.replace(/^https?:\/\//, '') : null;
+
+const updates = (await getCollection('updates'))
+  .filter((u) => u.data.published && u.data.project === entry.id)
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+const log = await Promise.all(updates.map(async (u) => ({
+  id: u.id,
+  data: u.data,
+  Content: u.data.kind === 'post' ? null : (await render(u)).Content,
+})));
+const fmt = (x) => x.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
 ---
 <Base title={`${d.title} | Blue Leaf Labs`} description={d.summary}>
   <div class="wrap detail">
@@ -27,20 +41,91 @@ const { Content } = await render(entry);
       {d.question && <p class="detail-summary">{d.question}</p>}
     </header>
 
-    <HeroImage prefix={d.imagePrefix} alt={d.heroAlt} />
+    {d.awards && d.awards.length > 0 && (
+      <section class="awards" aria-label="Awards">
+        <h2>Awards</h2>
+        <div class="award-list">
+          {d.awards.map((a) => (
+            <div class="award">
+              <span class="tro"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 21h8M12 17v4M7 4h10v4a5 5 0 0 1-10 0V4zM5 4H4a2 2 0 0 0 0 4h1M19 4h1a2 2 0 0 1 0 4h-1"/></svg></span>
+              <div>
+                <div class="a-title">{a.title}</div>
+                {(a.venue || a.year) && <div class="a-meta">{[a.venue, a.year].filter(Boolean).join(' · ')}</div>}
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+    )}
+
+    {d.highlights && d.highlights.length > 0 && (
+      <div class="chips">
+        {d.highlights.map((h) => (
+          <span class="chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>{h}</span>
+        ))}
+      </div>
+    )}
+
+    {d.publicationUrl && (
+      <a class="pub" href={d.publicationUrl}>
+        <span class="pub-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M16 13H8M16 17H8M10 9H8"/></svg></span>
+        <span class="pub-txt">
+          <span class="pub-lbl">Published preprint</span>
+          <span class="pub-doi">{pubShort} ↗</span>
+        </span>
+      </a>
+    )}
+
     <div class="detail-grid">
-      <div class="prose">
-        <Content components={{ Figure, YouTube }} />
+      <div>
+        <div class="prose"><Content components={{ Figure, YouTube }} /></div>
+
+        {gallery.length > 0 && (
+          <section class="proj-gallery" aria-label="From the build">
+            <h2>From the build</h2>
+            <div class="pg-grid">
+              {gallery.map((src, i) => (
+                <figure><img src={src} alt={`${d.title} photo ${i + 1}`} loading="lazy" /></figure>
+              ))}
+            </div>
+          </section>
+        )}
+
+        {log.length > 0 && (
+          <section class="project-log" aria-label="Project log">
+            <h2>Project log</h2>
+            <div class="log-list">
+              {log.map((u) => {
+                if (u.data.kind === 'post') {
+                  return (
+                    <a class="log-post" href={`/log/${u.id}`}>
+                      <div class="log-date">{fmt(u.data.date)}</div>
+                      <div class="log-title">{u.data.title}</div>
+                      {u.data.summary && <p class="log-sum">{u.data.summary}</p>}
+                      <span class="log-read">Read →</span>
+                    </a>
+                  );
+                }
+                const NoteBody = u.Content;
+                return (
+                  <div class="log-note">
+                    <div class="log-date">{fmt(u.data.date)}</div>
+                    <div class="log-title">{u.data.title}</div>
+                    <div class="log-body prose"><NoteBody components={{ Figure, YouTube }} /></div>
+                  </div>
+                );
+              })}
+            </div>
+          </section>
+        )}
       </div>
 
       <aside class="glance" aria-label="Research at a glance">
         <h2>Research at a glance</h2>
-        <div class="g-item"><div class="g-key">Status</div><div class="g-val">{d.status}</div></div>
         {d.methods && <div class="g-item"><div class="g-key">Primary methods</div><div class="g-val">{d.methods}</div></div>}
         {d.dataSources && <div class="g-item"><div class="g-key">Data sources</div><div class="g-val">{d.dataSources}</div></div>}
         {d.outputs && <div class="g-item"><div class="g-key">Outputs</div><div class="g-val">{d.outputs}</div></div>}
-        {d.repo && <div class="g-item"><div class="g-key">Code</div><div class="g-val"><a href={d.repo}>{d.repo.replace('https://github.com/', 'github.com/')}</a></div></div>}
-        <div class="g-item"><div class="g-key">Publication</div><div class="g-val">{d.publicationUrl ? <a href={d.publicationUrl}>Read the paper →</a> : 'Coming soon'}</div></div>
+        {repoShort && <div class="g-item"><div class="g-key">Code</div><div class="g-val"><a href={d.repo}>{repoShort}</a></div></div>}
       </aside>
     </div>
   </div>

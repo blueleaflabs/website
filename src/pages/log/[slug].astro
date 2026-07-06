@@ -1,0 +1,29 @@
+---
+import Base from '../../layouts/Base.astro';
+import { getCollection, render } from 'astro:content';
+import Figure from '../../components/Figure.astro';
+import YouTube from '../../components/YouTube.astro';
+
+export async function getStaticPaths() {
+  const posts = (await getCollection('updates')).filter((u) => u.data.published && u.data.kind === 'post');
+  return posts.map((entry) => ({ params: { slug: entry.id }, props: { entry } }));
+}
+
+const { entry } = Astro.props;
+const d = entry.data;
+const { Content } = await render(entry);
+const projects = await getCollection('research');
+const proj = projects.find((p) => p.id === d.project);
+const fmt = (x) => x.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
+---
+<Base title={`${d.title} | Blue Leaf Labs`} description={d.summary ?? d.title}>
+  <div class="wrap detail">
+    <a class="backlink" href={proj ? `/research/${proj.id}` : '/research'}>← {proj ? proj.data.title : 'Research'}</a>
+    <header class="detail-head">
+      <div class="kv"><span class="eyebrow">Project log</span><span class="post-meta">{fmt(d.date)}</span></div>
+      <h1>{d.title}</h1>
+      {d.summary && <p class="detail-summary">{d.summary}</p>}
+    </header>
+    <article class="prose serif"><Content components={{ Figure, YouTube }} /></article>
+  </div>
+</Base>

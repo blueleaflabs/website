@@ -15,6 +15,8 @@ const research = defineCollection({
     outputs: z.string().optional(),
     repo: z.string().url().optional(),
     publicationUrl: z.string().url().optional(),
+    awards: z.array(z.object({ title: z.string(), venue: z.string().optional(), year: z.union([z.string(), z.number()]).optional() })).optional(),
+    highlights: z.array(z.string()).optional(),
     imagePrefix: z.string().optional(),
     heroAlt: z.string().optional(),
     order: z.number().default(50),
@@ -77,4 +79,16 @@ const posts = defineCollection({
   }),
 });
 
-export const collections = { research, workshops, talks, posts };
+const updates = defineCollection({
+  loader: glob({ pattern: '**/*.{md,mdx}', base: './src/content/updates' }),
+  schema: z.object({
+    project: z.string(),
+    date: z.coerce.date(),
+    title: z.string(),
+    summary: z.string().optional(),
+    kind: z.enum(['note', 'post']).default('note'),
+    published: z.boolean().default(true),
+  }),
+});
+
+export const collections = { research, workshops, talks, posts, updates };

@@ -14,3 +14,17 @@ export function heroImage(prefix?: string): string | null {
   const hit = files.find((f) => re.test(f));
   return hit ? `${IMG_URL}/${hit}` : null;
 }
+
+// Returns URLs of <prefix>-photo-1..N.<ext>, numerically sorted (the 2x2 gallery).
+export function galleryImages(prefix?: string): string[] {
+  if (!prefix) return [];
+  const esc = prefix.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  const re = new RegExp(`^${esc}-photo-(\\d+)\\.(png|jpe?g|webp|avif|gif)$`, 'i');
+  let files: string[] = [];
+  try { files = readdirSync(join(process.cwd(), IMG_DIR)); } catch { /* none */ }
+  return files
+    .map((f) => { const m = f.match(re); return m ? { f, n: parseInt(m[1], 10) } : null; })
+    .filter((x): x is { f: string; n: number } => x !== null)
+    .sort((a, b) => a.n - b.n)
+    .map((x) => `${IMG_URL}/${x.f}`);
+}
