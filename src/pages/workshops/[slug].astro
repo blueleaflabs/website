@@ -4,6 +4,7 @@ import { getCollection, render } from 'astro:content';
 import HeroImage from '../../components/HeroImage.astro';
 import Figure from '../../components/Figure.astro';
 import YouTube from '../../components/YouTube.astro';
+import VideoHero from '../../components/VideoHero.astro';
 export async function getStaticPaths() {
   const items = (await getCollection('workshops')).filter((e) => e.data.published);
   return items.map((entry) => ({ params: { slug: entry.id }, props: { entry } }));
@@ -11,11 +12,13 @@ export async function getStaticPaths() {
 const { entry } = Astro.props;
 const d = entry.data;
 const { Content } = await render(entry);
+const hasTopBlock = d.videos && d.videos.length > 0;
 ---
 <Base title={`${d.title} | Watt Workshops`} description={d.summary}>
   <div class="wrap detail">
     <a class="backlink" href="/workshops">← Watt Workshops</a>
-    <header class="detail-head"><h1>{d.title}</h1><p class="detail-summary">{d.summary}</p></header>
+    <header class={`detail-head${hasTopBlock ? ' flush' : ''}`}><h1>{d.title}</h1><p class="detail-summary">{d.summary}</p></header>
+    <VideoHero videos={d.videos} title={d.title} />
     <HeroImage prefix={d.imagePrefix} alt={d.heroAlt} />
     <div class="detail-grid">
       <div class="prose"><Content components={{ Figure, YouTube }} /></div>

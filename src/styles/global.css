@@ -119,9 +119,10 @@ section{padding:clamp(3.25rem,6.5vw,5rem) 0}
 .backlink{font-family:'IBM Plex Mono',monospace;font-size:.8rem;color:var(--ink-2);text-decoration:none}
 .backlink:hover{color:var(--accent)}
 .detail-head{border-bottom:1.5px solid var(--ink);padding-bottom:1rem;margin-top:.6rem;margin-bottom:1.3rem}
+.detail-head.flush{border-bottom:none;padding-bottom:.15rem;margin-bottom:1.05rem}
 .detail-head .kv{display:flex;align-items:center;gap:1rem;flex-wrap:wrap;margin-bottom:.55rem}
 .detail-head h1{font-size:clamp(2rem,4.4vw,3rem)}
-.detail-summary{font-size:1.1rem;color:var(--ink-2);max-width:62ch;margin-top:.7rem}
+.detail-summary{font-size:1.1rem;color:var(--ink-2);max-width:62ch;margin-top:.7rem;text-wrap:balance}
 .detail-grid{display:grid;grid-template-columns:1fr 320px;gap:clamp(1.5rem,4vw,3rem);align-items:start}
 
 /* At a Glance panel: light spec panel, distinct via accent header + shadow */
@@ -180,7 +181,7 @@ section{padding:clamp(3.25rem,6.5vw,5rem) 0}
 .wins-solo .wins-awards{max-width:640px}
 .wins-photos .pg-grid{margin-top:0}
 @media (min-width:820px){
-  .wins-grid{grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:1.75rem;align-items:start}
+  .wins-grid{grid-template-columns:minmax(0,2fr) minmax(0,5fr);gap:1.75rem;align-items:start}
 }
 
 /* project log */
@@ -230,6 +231,11 @@ section{padding:clamp(3.25rem,6.5vw,5rem) 0}
 .video-embed{position:relative;width:100%;aspect-ratio:16/9;margin:1.8rem 0;border-radius:6px;overflow:hidden;background:var(--readout-bg)}
 .video-embed iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
 .video-placeholder{font-family:'IBM Plex Mono',monospace;font-size:.85rem;color:var(--ink-2);border:1px dashed var(--rule);border-radius:6px;padding:1.5rem;text-align:center;margin:1.8rem 0}
+.video-hero{margin:0 0 1.6rem}
+.video-hero .vh-item .video-embed{margin:0}
+.video-hero.multi{display:grid;grid-template-columns:1fr;gap:1.2rem}
+@media (min-width:760px){.video-hero.multi{grid-template-columns:1fr 1fr}}
+.vh-label{font-family:'IBM Plex Mono',monospace;font-size:.7rem;font-weight:500;letter-spacing:.09em;text-transform:uppercase;color:var(--accent);margin-bottom:.5rem}
 
 /* held-section banner (dev only) */
 .held{background:#FBF3E2;border:1px solid #E4C876;border-radius:6px;padding:1rem 1.25rem;font-size:.92rem;color:#6b551f;margin:1.5rem 0}

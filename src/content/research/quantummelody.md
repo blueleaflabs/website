@@ -21,7 +21,7 @@ awards:
     venue: "Synopsys Science Fair"
     year: "2025"
   - title: "Qualifier"
-    venue: "California Science and Engineering Fair"
+    venue: "CSEF"
     year: "2025"
   - title: "Mayor's Recognition"
     venue: "City of Cupertino"

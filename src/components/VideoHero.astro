@@ -1,0 +1,15 @@
+---
+import YouTube from './YouTube.astro';
+interface Props { videos?: { label?: string; url: string }[]; title?: string; }
+const { videos = [], title = 'Video' } = Astro.props;
+---
+{videos.length > 0 && (
+  <div class={videos.length > 1 ? 'video-hero multi' : 'video-hero'}>
+    {videos.map((v) => (
+      <div class="vh-item">
+        {v.label && <div class="vh-label">{v.label}</div>}
+        <YouTube url={v.url} title={v.label ?? title} />
+      </div>
+    ))}
+  </div>
+)}

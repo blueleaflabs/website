@@ -9,6 +9,9 @@ methods: "Spatial data analysis; multivariate modeling; data integration across 
 dataSources: "Gridded temperature datasets; air quality and wildfire smoke observations; land-use and urban surface data; U.S. Census demographic data."
 outputs: "Neighborhood-scale heat risk maps; composite vulnerability indices; spatial exposure analyses; reproducible data pipelines."
 repo: "https://github.com/blueleaflabs/heatshield"
+videos:
+  - label: "Explainer"
+    url: "https://youtu.be/_ZBw42czCBM"
 published: true
 ---
 

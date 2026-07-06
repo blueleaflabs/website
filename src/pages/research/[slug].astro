@@ -3,6 +3,7 @@ import Base from '../../layouts/Base.astro';
 import { getCollection, render } from 'astro:content';
 import Figure from '../../components/Figure.astro';
 import YouTube from '../../components/YouTube.astro';
+import VideoHero from '../../components/VideoHero.astro';
 
 export async function getStaticPaths() {
   const items = (await getCollection('research')).filter((e) => e.data.published);
@@ -24,6 +25,7 @@ const galUrl = (src) => (/^(https?:)?\//.test(src) ? src : `/images/uploads/${sr
 const awards = d.awards ?? [];
 const hasAwards = awards.length > 0;
 const hasPhotos = gallery.length > 0;
+const hasTopBlock = (d.videos && d.videos.length > 0) || pubs.length > 0 || (d.highlights && d.highlights.length > 0) || hasAwards || hasPhotos;
 
 const updates = (await getCollection('updates'))
   .filter((u) => u.data.published && u.data.project === entry.id)
@@ -37,7 +39,7 @@ const fmt = (x) => x.toLocaleDateString('en-US', { year: 'numeric', month: 'shor
   <div class="wrap detail">
     <a class="backlink" href="/research">← Research</a>
 
-    <header class="detail-head">
+    <header class={`detail-head${hasTopBlock ? ' flush' : ''}`}>
       <div class="kv">
         <span class="eyebrow">{d.kind === 'analysis' ? 'Analysis' : 'Project'}</span>
         <span class={`status ${d.status.toLowerCase()}`}>{d.status}</span>
@@ -45,6 +47,8 @@ const fmt = (x) => x.toLocaleDateString('en-US', { year: 'numeric', month: 'shor
       <h1>{d.title}</h1>
       {d.question && <p class="detail-summary">{d.question}</p>}
     </header>
+
+    <VideoHero videos={d.videos} title={d.title} />
 
     {pubs.length > 0 && (
       <div class="pub">

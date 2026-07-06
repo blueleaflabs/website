@@ -50,6 +50,13 @@ collections:
           - { name: src, label: Image, widget: image }
           - { name: alt, label: "Alt text (accessibility)", widget: string, required: false }
           - { name: caption, label: "Caption (optional, shown under photo)", widget: string, required: false }
+      - label: "Video hero (YouTube)"
+        name: videos
+        widget: list
+        required: false
+        fields:
+          - { name: label, label: "Label (e.g. Explainer)", widget: string, required: false }
+          - { name: url, label: "YouTube URL", widget: string }
       - { name: highlights, label: "Key points (2-4 plain-language highlights)", widget: list, required: false }
       - label: Awards
         name: awards
@@ -123,6 +130,13 @@ collections:
       - { name: location, label: Location, widget: string, required: false }
       - { name: nextSession, label: Next session, widget: string, required: false }
       - { name: materials, label: Materials, widget: string, required: false }
+      - label: "Video hero (YouTube)"
+        name: videos
+        widget: list
+        required: false
+        fields:
+          - { name: label, label: "Label (e.g. Explainer)", widget: string, required: false }
+          - { name: url, label: "YouTube URL", widget: string }
       - { name: imagePrefix, label: "Image prefix (files: <prefix>-1 hero, -2, -3, ...)", widget: string, required: false }
       - { name: heroAlt, label: "Hero image alt text", widget: string, required: false }
       - { name: order, label: Sort order, widget: number, default: 50, value_type: int }
@@ -151,6 +165,13 @@ collections:
       - { name: interviewOutlet, label: Interview outlet, widget: string, required: false }
       - { name: interviewFormat, label: Interview format, widget: string, required: false }
       - { name: interviewUrl, label: Interview URL, widget: string, required: false }
+      - label: "Video hero (YouTube)"
+        name: videos
+        widget: list
+        required: false
+        fields:
+          - { name: label, label: "Label (e.g. Explainer)", widget: string, required: false }
+          - { name: url, label: "YouTube URL", widget: string }
       - { name: imagePrefix, label: "Image prefix (files: <prefix>-1 hero, -2, -3, ...)", widget: string, required: false }
       - { name: heroAlt, label: "Hero image alt text", widget: string, required: false }
       - { name: published, label: Published, widget: boolean, default: true }
