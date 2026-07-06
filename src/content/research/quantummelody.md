@@ -9,7 +9,32 @@ methods: "Quantum feature encoding; audio signal analysis; circuit-based modelin
 dataSources: "Extracted audio features from vocal recordings; pitch, timing, dynamic, and timbral descriptors derived from signal processing pipelines."
 outputs: "Quantum circuit designs; feature encoding strategies; comparative performance metrics; experimental evaluation results."
 repo: "https://github.com/blueleaflabs/quantummelody"
-publicationUrl: "https://doi.org/10.20944/preprints202509.0281.v1"
+publications:
+  - label: "Published preprint"
+    url: "https://doi.org/10.20944/preprints202509.0281.v1"
+highlights:
+  - "Open-source code"
+  - "Bridges quantum computing and music"
+  - "Complete, end-to-end study"
+awards:
+  - title: "First Award"
+    venue: "Synopsys Science Fair"
+    year: "2025"
+  - title: "Qualifier"
+    venue: "California Science and Engineering Fair"
+    year: "2025"
+  - title: "Mayor's Recognition"
+    venue: "City of Cupertino"
+    year: "2026"
+gallery:
+  - src: "quantummelody-1.jpeg"
+    alt: "Quantum vs Classical comparison"
+  - src: "quantummelody-2.jpeg"
+    alt: "Presenting QuantumMelody"
+  - src: "quantummelody-3.jpeg"
+    alt: "Synopsys First Award, with my Java teacher Mr Terry Yu"
+  - src: "quantummelody-4.jpeg"
+    alt: "Mayor's Award, with Mr Forrest Williams"
 published: true
 ---
 

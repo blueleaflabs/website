@@ -35,7 +35,21 @@ collections:
       - { name: dataSources, label: Data sources, widget: text, required: false }
       - { name: outputs, label: Outputs, widget: text, required: false }
       - { name: repo, label: GitHub repo URL, widget: string, required: false }
-      - { name: publicationUrl, label: Publication URL, widget: string, required: false }
+      - label: Publications
+        name: publications
+        widget: list
+        required: false
+        fields:
+          - { name: label, label: "Label (e.g. Preprint, ARCH 2026)", widget: string, required: false }
+          - { name: url, label: URL, widget: string }
+      - label: "Gallery (2x2 photos)"
+        name: gallery
+        widget: list
+        required: false
+        fields:
+          - { name: src, label: Image, widget: image }
+          - { name: alt, label: "Alt text (accessibility)", widget: string, required: false }
+          - { name: caption, label: "Caption (optional, shown under photo)", widget: string, required: false }
       - { name: highlights, label: "Key points (2-4 plain-language highlights)", widget: list, required: false }
       - label: Awards
         name: awards

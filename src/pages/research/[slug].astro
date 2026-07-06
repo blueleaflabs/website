@@ -3,7 +3,6 @@ import Base from '../../layouts/Base.astro';
 import { getCollection, render } from 'astro:content';
 import Figure from '../../components/Figure.astro';
 import YouTube from '../../components/YouTube.astro';
-import { galleryImages } from '../../lib/images';
 
 export async function getStaticPaths() {
   const items = (await getCollection('research')).filter((e) => e.data.published);
@@ -14,17 +13,23 @@ const { entry } = Astro.props;
 const d = entry.data;
 const { Content } = await render(entry);
 
-const gallery = galleryImages(d.imagePrefix);
 const repoShort = d.repo ? d.repo.replace('https://github.com/', 'github.com/').replace(/\/$/, '') : null;
-const pubShort = d.publicationUrl ? d.publicationUrl.replace(/^https?:\/\//, '') : null;
+
+// publications: prefer the list; fall back to the legacy single field
+const pubs = (d.publications && d.publications.length)
+  ? d.publications
+  : (d.publicationUrl ? [{ url: d.publicationUrl, label: 'Published preprint' }] : []);
+const shortenUrl = (u) => { const s = u.replace(/^https?:\/\//, ''); return s.startsWith('doi.org/') ? s : s.split('/')[0]; };
+
+// gallery: explicit list, so it never collides with inline <Figure> images
+const gallery = d.gallery ?? [];
+const galUrl = (src) => (/^(https?:)?\//.test(src) ? src : `/images/uploads/${src}`);
 
 const updates = (await getCollection('updates'))
   .filter((u) => u.data.published && u.data.project === entry.id)
   .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
 const log = await Promise.all(updates.map(async (u) => ({
-  id: u.id,
-  data: u.data,
-  Content: u.data.kind === 'post' ? null : (await render(u)).Content,
+  id: u.id, data: u.data, Content: u.data.kind === 'post' ? null : (await render(u)).Content,
 })));
 const fmt = (x) => x.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
 ---
@@ -66,14 +71,20 @@ const fmt = (x) => x.toLocaleDateString('en-US', { year: 'numeric', month: 'shor
       </div>
     )}
 
-    {d.publicationUrl && (
-      <a class="pub" href={d.publicationUrl}>
+    {pubs.length > 0 && (
+      <div class="pub">
         <span class="pub-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M16 13H8M16 17H8M10 9H8"/></svg></span>
-        <span class="pub-txt">
-          <span class="pub-lbl">Published preprint</span>
-          <span class="pub-doi">{pubShort} ↗</span>
-        </span>
-      </a>
+        <div class="pub-txt">
+          <span class="pub-lbl">{pubs.length > 1 ? 'Publications' : (pubs[0].label ?? 'Publication')}</span>
+          {pubs.length === 1 ? (
+            <a class="pub-doi" href={pubs[0].url}>{shortenUrl(pubs[0].url)} ↗</a>
+          ) : (
+            <div class="pub-list">
+              {pubs.map((p) => (<a class="pub-item" href={p.url}>{p.label ?? shortenUrl(p.url)} ↗</a>))}
+            </div>
+          )}
+        </div>
+      </div>
     )}
 
     <div class="detail-grid">
@@ -81,11 +92,14 @@ const fmt = (x) => x.toLocaleDateString('en-US', { year: 'numeric', month: 'shor
         <div class="prose"><Content components={{ Figure, YouTube }} /></div>
 
         {gallery.length > 0 && (
-          <section class="proj-gallery" aria-label="From the build">
+          <section class="proj-gallery" aria-label="Gallery">
             <h2>From the build</h2>
             <div class="pg-grid">
-              {gallery.map((src, i) => (
-                <figure><img src={src} alt={`${d.title} photo ${i + 1}`} loading="lazy" /></figure>
+              {gallery.map((g) => (
+                <figure>
+                  <img src={galUrl(g.src)} alt={g.alt ?? ''} loading="lazy" />
+                  {g.caption && <figcaption>{g.caption}</figcaption>}
+                </figure>
               ))}
             </div>
           </section>

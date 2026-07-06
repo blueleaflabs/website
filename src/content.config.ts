@@ -15,6 +15,8 @@ const research = defineCollection({
     outputs: z.string().optional(),
     repo: z.string().url().optional(),
     publicationUrl: z.string().url().optional(),
+    publications: z.array(z.object({ label: z.string().optional(), url: z.string().url() })).optional(),
+    gallery: z.array(z.object({ src: z.string(), alt: z.string().optional(), caption: z.string().optional() })).optional(),
     awards: z.array(z.object({ title: z.string(), venue: z.string().optional(), year: z.union([z.string(), z.number()]).optional() })).optional(),
     highlights: z.array(z.string()).optional(),
     imagePrefix: z.string().optional(),

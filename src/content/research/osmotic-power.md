@@ -9,6 +9,25 @@ methods: "Experimental prototyping; electrochemical modeling; system-level energ
 dataSources: "Laboratory measurements from RED prototypes; controlled salinity gradient experiments; flow-rate and voltage/current observations; membrane and electrolyte parameters from published literature."
 outputs: "Experimental RED cell prototypes; electrical performance curves; efficiency and power density estimates; feasibility assessments for desalination brine energy recovery."
 repo: "https://github.com/blueleaflabs/osmoflux"
+publications:
+  - label: "Society of Actuaries ARCH, 2026"
+    url: "https://www.soa.org/globalassets/assets/files/static-pages/research/arch/2026/arch-2026-iss-2-blue-leaf-labs.pdf"
+awards:
+  - title: "2nd Place, National ($15,000 scholarship)"
+    venue: "Modeling the Future Challenge"
+    year: "2026"
+  - title: "Bronze Medalist"
+    venue: "International Genius Olympiad"
+    year: "2026"
+  - title: "National Finalist (top 8), Climate Resilience Award"
+    venue: "Modeling the Future Challenge"
+    year: "2026"
+  - title: "2nd Award (Physical Science and Engineering)"
+    venue: "Synopsys Science Fair"
+    year: "2026"
+  - title: "Research Grant"
+    venue: "Monta Vista IRPD"
+    year: "2026"
 published: true
 ---
 
