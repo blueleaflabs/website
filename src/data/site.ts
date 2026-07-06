@@ -15,6 +15,7 @@ export const org = {
   focus: 'Climate systems — hydroclimate, heat risk, water-energy',
   founded: '2025',
   email: 'hello@blueleaflabs.org',
+  emailDisplay: 'hello [at] blueleaflabs [dot] org',
   purpose:
     'This corporation is organized exclusively for public and charitable purposes, including conducting scientific research and providing educational activities for the public benefit.',
 };
@@ -30,9 +31,9 @@ export const socials = {
 // Every possible top-level section. `live: false` = built but held.
 export const sections = [
   { label: 'Research',  path: '/research',  live: true  },
-  { label: 'Workshops', path: '/workshops', live: false },
+  { label: 'Workshops', path: '/workshops', live: true },
   { label: 'Talks',     path: '/talks',     live: false },
-  { label: 'Writing',   path: '/writing',   live: false },
+  { label: 'Writing',   path: '/writing',   live: true },
   { label: 'About',     path: '/about',     live: true  },
 ];
 
