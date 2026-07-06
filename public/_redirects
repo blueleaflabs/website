@@ -1,21 +1,25 @@
+# ============================================================
 # Cloudflare Pages redirects.
-# Research projects, /about, and the legal pages keep their exact old paths,
-# so they need no redirects. Only the blog moved (/blog + /post/* -> /writing).
+# Goal: every URL the old Wix site published still resolves.
+# Pages that carried over keep their exact paths (no redirect
+# needed): /, /research, /research/*, /about, and the three
+# legal pages. Everything retired gets a 301 below.
+# ============================================================
 
-# Blog: old Wix blog + "news" feed/categories -> Writing
+# --- Blog: old Wix blog + "news" feed/categories -> Writing ---
 /blog                          /writing            301
 /post/*                        /writing/:splat     301
 /news                          /writing            301
 /news/categories/*             /writing            301
 
-# Event pages (no live equivalent; Talks not yet published).
-# Change target to /talks once that section is live.
+# --- Event pages (no live equivalent; Talks section is not yet
+#     published). Point to home for now; change to /talks once live. ---
 /events/*                      /                   301
 
-# Wix donation utility page (no equivalent)
+# --- Wix donation utility page (no equivalent) ---
 /donation-thank-you-page       /                   301
 
-# Sitemaps: old Wix sitemap URLs -> new generated index
+# --- Sitemaps: old Wix sitemap URLs -> new generated index ---
 /sitemap.xml                   /sitemap-index.xml  301
 /pages-sitemap.xml             /sitemap-index.xml  301
 /blog-categories-sitemap.xml   /sitemap-index.xml  301

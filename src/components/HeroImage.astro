@@ -1,0 +1,11 @@
+---
+import { heroImage } from '../lib/images';
+interface Props { prefix?: string; alt?: string; }
+const { prefix, alt = '' } = Astro.props;
+const src = heroImage(prefix);
+---
+{src && (
+  <figure class="fig" style="margin-top:0">
+    <img src={src} alt={alt} />
+  </figure>
+)}

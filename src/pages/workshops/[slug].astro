@@ -1,6 +1,8 @@
 ---
 import Base from '../../layouts/Base.astro';
 import { getCollection, render } from 'astro:content';
+import HeroImage from '../../components/HeroImage.astro';
+import Figure from '../../components/Figure.astro';
 export async function getStaticPaths() {
   const items = (await getCollection('workshops')).filter((e) => e.data.published);
   return items.map((entry) => ({ params: { slug: entry.id }, props: { entry } }));
@@ -13,8 +15,9 @@ const { Content } = await render(entry);
   <div class="wrap detail">
     <a class="backlink" href="/workshops">← Watt Workshops</a>
     <header class="detail-head"><h1>{d.title}</h1><p class="detail-summary">{d.summary}</p></header>
+    <HeroImage prefix={d.imagePrefix} alt={d.heroAlt} />
     <div class="detail-grid">
-      <div class="prose"><Content /></div>
+      <div class="prose"><Content components={{ Figure }} /></div>
       <aside class="glance" aria-label="Workshop at a glance">
         <h2>At a glance</h2>
         {d.audience && <div class="g-item"><div class="g-key">Audience</div><div class="g-val">{d.audience}</div></div>}

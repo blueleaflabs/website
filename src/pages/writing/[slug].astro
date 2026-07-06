@@ -1,6 +1,9 @@
 ---
 import Base from '../../layouts/Base.astro';
 import { getCollection, render } from 'astro:content';
+import HeroImage from '../../components/HeroImage.astro';
+import Figure from '../../components/Figure.astro';
+
 export async function getStaticPaths() {
   const items = (await getCollection('posts')).filter((e) => e.data.published);
   return items.map((entry) => ({ params: { slug: entry.id }, props: { entry } }));
@@ -17,6 +20,7 @@ const fmt = (x) => x.toISOString().slice(0, 10);
       <div class="kv"><span class="eyebrow">{d.tag}</span><span class="post-meta">{fmt(d.date)}{d.readingTime ? ` · ${d.readingTime}` : ''}</span></div>
       <h1>{d.title}</h1>
     </header>
-    <article class="prose serif"><Content /></article>
+    <HeroImage prefix={d.imagePrefix} alt={d.heroAlt} />
+    <article class="prose serif"><Content components={{ Figure }} /></article>
   </div>
 </Base>

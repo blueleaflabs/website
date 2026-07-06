@@ -1,6 +1,8 @@
 ---
 import Base from '../../layouts/Base.astro';
 import { getCollection, render } from 'astro:content';
+import HeroImage from '../../components/HeroImage.astro';
+import Figure from '../../components/Figure.astro';
 
 export async function getStaticPaths() {
   const items = (await getCollection('research')).filter((e) => e.data.published);
@@ -24,9 +26,10 @@ const { Content } = await render(entry);
       {d.question && <p class="detail-summary">{d.question}</p>}
     </header>
 
+    <HeroImage prefix={d.imagePrefix} alt={d.heroAlt} />
     <div class="detail-grid">
       <div class="prose">
-        <Content />
+        <Content components={{ Figure }} />
       </div>
 
       <aside class="glance" aria-label="Research at a glance">

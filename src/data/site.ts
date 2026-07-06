@@ -31,9 +31,9 @@ export const socials = {
 // Every possible top-level section. `live: false` = built but held.
 export const sections = [
   { label: 'Research',  path: '/research',  live: true  },
-  { label: 'Workshops', path: '/workshops', live: true },
+  { label: 'Workshops', path: '/workshops', live: true  },
   { label: 'Talks',     path: '/talks',     live: false },
-  { label: 'Writing',   path: '/writing',   live: true },
+  { label: 'Writing',   path: '/writing',   live: true  },
   { label: 'About',     path: '/about',     live: true  },
 ];
 

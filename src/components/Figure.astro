@@ -1,0 +1,10 @@
+---
+interface Props { src: string; alt?: string; caption?: string; }
+const { src, alt = '', caption } = Astro.props;
+// bare filename -> /images/uploads/<file>; absolute or URL used as-is
+const url = /^(https?:)?\//.test(src) ? src : `/images/uploads/${src}`;
+---
+<figure class="fig">
+  <img src={url} alt={alt} />
+  {caption && <figcaption>{caption}</figcaption>}
+</figure>

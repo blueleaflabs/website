@@ -139,6 +139,7 @@ section{padding:clamp(3.25rem,6.5vw,5rem) 0}
 .prose.serif{font-family:'IBM Plex Serif',Georgia,serif}
 .prose h2{font-size:1.5rem;margin:2.2rem 0 .8rem}
 .prose h3{font-size:1.2rem;margin:1.8rem 0 .6rem}
+.prose h2,.prose h3{font-weight:700}
 .prose p{margin:0 0 1.1rem}
 .prose ul,.prose ol{margin:0 0 1.1rem;padding-left:1.3rem}
 .prose li{margin:.3rem 0}
