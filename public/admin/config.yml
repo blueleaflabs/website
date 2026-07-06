@@ -7,7 +7,7 @@ backend:
   repo: blueleaflabs/website     # <-- set to your repo, e.g. blueleaflabs/blueleaflabs.org
   branch: main
   # base_url is the OAuth relay that lets you log in with GitHub.
-  # See the deploy guide (README) — deploy sveltia-cms-auth as a Cloudflare Worker
+  # See the deploy guide (README) to deploy sveltia-cms-auth as a Cloudflare Worker
   # and paste its URL here:
   # base_url: https://your-auth-worker.workers.dev
 
@@ -24,7 +24,7 @@ collections:
     extension: md
     format: frontmatter
     identifier_field: title
-    summary: "{{title}} — {{status}}"
+    summary: "{{title}} ({{status}})"
     fields:
       - { name: title, label: Title, widget: string }
       - { name: kind, label: Kind, widget: select, options: ["project", "analysis"], default: "project" }

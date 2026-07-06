@@ -1,5 +1,5 @@
 /* ============================================================
-   Blue Leaf Labs — design system
+   Blue Leaf Labs design system
    Tokens and components ported from the approved homepage.
    ============================================================ */
 :root{
@@ -124,7 +124,7 @@ section{padding:clamp(3.25rem,6.5vw,5rem) 0}
 .detail-summary{font-size:1.15rem;color:var(--ink-2);max-width:60ch;margin-top:1rem}
 .detail-grid{display:grid;grid-template-columns:1fr 320px;gap:clamp(1.5rem,4vw,3rem);align-items:start}
 
-/* At a Glance panel — the Readout treatment reused */
+/* At a Glance panel: the Readout treatment reused */
 .glance{background:var(--readout-bg);color:var(--readout-ink);border-radius:6px;padding:1.4rem 1.5rem;font-family:'IBM Plex Mono',monospace;position:sticky;top:84px}
 .glance h2{font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;color:var(--readout-dim);border-bottom:1px solid rgba(255,255,255,.12);padding-bottom:.75rem;margin-bottom:.4rem;font-weight:500}
 .g-item{padding:.85rem 0;border-bottom:1px solid rgba(255,255,255,.09)}
@@ -161,6 +161,8 @@ section{padding:clamp(3.25rem,6.5vw,5rem) 0}
 .fig{margin:1.8rem 0}
 .fig img{border:1px solid var(--line);border-radius:4px}
 .fig figcaption{font-family:'IBM Plex Mono',monospace;font-size:.78rem;color:var(--ink-2);margin-top:.55rem}
+.headshot{float:right;max-width:230px;margin:.2rem 0 1.25rem 1.75rem}
+@media (max-width:640px){.headshot{float:none;max-width:200px;margin:0 0 1.5rem}}
 
 /* held-section banner (dev only) */
 .held{background:#FBF3E2;border:1px solid #E4C876;border-radius:6px;padding:1rem 1.25rem;font-size:.92rem;color:#6b551f;margin:1.5rem 0}

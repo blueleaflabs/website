@@ -21,7 +21,7 @@ import { org, socials } from '../data/site';
         </div>
         <div class="pcard" style="cursor:default">
           <h3>Talks</h3>
-          <p>Invite a talk on climate systems, clean energy, and the economics of adoption &mdash; or request an interview.</p>
+          <p>Invite a talk on climate systems, clean energy, and the economics of adoption, or request an interview.</p>
         </div>
       </div>
       <div class="band" style="margin-top:2rem">
@@ -29,7 +29,7 @@ import { org, socials } from '../data/site';
           <h2>Reach out</h2>
           <p>The fastest way to start a conversation is email.</p>
         </div>
-        <a class="btn btn-primary" href={`mailto:${org.email}`}>{org.email}</a>
+        <p style="font-family:'IBM Plex Mono',monospace;color:var(--readout-accent);font-size:1.05rem;margin:0;white-space:nowrap">{org.emailDisplay}</p>
       </div>
     </div>
   </section>

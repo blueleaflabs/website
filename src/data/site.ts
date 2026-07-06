@@ -1,5 +1,5 @@
 // ============================================================
-// Site configuration — single source of truth for org facts,
+// Site configuration: single source of truth for org facts,
 // navigation, and which sections are currently PUBLISHED.
 //
 // To launch a held section (Workshops, Talks, Writing):
@@ -12,7 +12,7 @@ export const org = {
   name: 'Blue Leaf Labs',
   legal: 'a registered 501(c)(3) nonprofit',
   tagline: 'Climate systems research, documented in the open.',
-  focus: 'Climate systems — hydroclimate, heat risk, water-energy',
+  focus: 'Climate systems: hydroclimate, heat risk, water-energy',
   founded: '2025',
   email: 'hello@blueleaflabs.org',
   emailDisplay: 'hello [at] blueleaflabs [dot] org',

@@ -2,21 +2,24 @@
 import Base from '../layouts/Base.astro';
 import { org, socials } from '../data/site';
 ---
-<Base title="About | Blue Leaf Labs" description="Blue Leaf Labs is a registered 501(c)(3) nonprofit linking engineering, climate science, and economics to turn research into practical change — founded and run by Rohan Agarwal.">
+<Base title="About | Blue Leaf Labs" description="Blue Leaf Labs is a registered 501(c)(3) nonprofit linking engineering, climate science, and economics to turn research into practical change, founded and run by Rohan Agarwal.">
   <div class="wrap page-intro">
     <span class="eyebrow">About</span>
     <h1>About Blue Leaf Labs</h1>
     <p>
       Blue Leaf Labs is {org.legal}, founded and run by Rohan Agarwal. It exists to advance
-      climate systems research and open scientific education &mdash; and to put that work to public use.
+      climate systems research and open scientific education, and to put that work to public use.
     </p>
   </div>
 
   <section>
     <div class="wrap">
       <div class="prose serif" style="max-width:72ch">
+        <figure class="fig headshot">
+          <img src="/images/uploads/rohan-headshot.jpg" alt="Rohan Agarwal, founder of Blue Leaf Labs" />
+        </figure>
         <p>
-          I'm Rohan Agarwal &mdash; a researcher, teacher, and performer, and a dual-enrolled sophomore
+          I'm Rohan Agarwal, a researcher, teacher, and performer, and a dual-enrolled sophomore
           at Monta Vista High School and De Anza College in Cupertino, CA.
         </p>
         <p>
@@ -44,7 +47,7 @@ import { org, socials } from '../data/site';
           the City of Cupertino ranges from the school-year Advanced Topics in Mathematics to
           custom-crafted summer programs in environmental engineering and scientific inquiry. Working
           with students from fifth to twelfth grade, I invest a lot of time designing materials that
-          bring abstract concepts to life &mdash; clear examples, cheat-sheets, and small tools they can use
+          bring abstract concepts to life with clear examples, cheat-sheets, and small tools they can use
           long after class ends. I'm currently designing an environmental awareness course for
           Summer 2026.
         </p>
@@ -59,10 +62,6 @@ import { org, socials } from '../data/site';
         </p>
       </div>
 
-      <div class="held" style="margin-top:2.5rem">
-        <strong>Note (remove before launch):</strong> This page carries your first-person founder
-        narrative. The purpose clause in the footer is the legal statement; this is the human one.
-      </div>
     </div>
   </section>
 </Base>
