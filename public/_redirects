@@ -2,5 +2,22 @@
 # Research projects, /about, and the legal pages keep their exact old paths,
 # so they need no redirects. Only the blog moved (/blog + /post/* -> /writing).
 
-/blog                /writing              301
-/post/*              /writing/:splat       301
+# Blog: old Wix blog + "news" feed/categories -> Writing
+/blog                          /writing            301
+/post/*                        /writing/:splat     301
+/news                          /writing            301
+/news/categories/*             /writing            301
+
+# Event pages (no live equivalent; Talks not yet published).
+# Change target to /talks once that section is live.
+/events/*                      /                   301
+
+# Wix donation utility page (no equivalent)
+/donation-thank-you-page       /                   301
+
+# Sitemaps: old Wix sitemap URLs -> new generated index
+/sitemap.xml                   /sitemap-index.xml  301
+/pages-sitemap.xml             /sitemap-index.xml  301
+/blog-categories-sitemap.xml   /sitemap-index.xml  301
+/event-pages-sitemap.xml       /sitemap-index.xml  301
+/dynamic-research_p_57f37db5_a1f6_410e_abf2_63971e1fd414_0_5000-sitemap.xml   /sitemap-index.xml   301
