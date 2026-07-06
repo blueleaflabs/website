@@ -1,0 +1,24 @@
+---
+interface Props { id?: string; url?: string; title?: string; }
+const { id, url, title = 'Video' } = Astro.props;
+function extractId(input?: string): string | null {
+  if (!input) return null;
+  if (/^[\w-]{11}$/.test(input)) return input;
+  const m = input.match(/(?:youtu\.be\/|v=|embed\/|shorts\/)([\w-]{11})/);
+  return m ? m[1] : null;
+}
+const vid = extractId(id) || extractId(url);
+---
+{vid ? (
+  <div class="video-embed">
+    <iframe
+      src={`https://www.youtube-nocookie.com/embed/${vid}`}
+      title={title}
+      loading="lazy"
+      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+      allowfullscreen
+    ></iframe>
+  </div>
+) : (
+  <p class="video-placeholder"><em>Video coming soon.</em></p>
+)}

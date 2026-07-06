@@ -3,6 +3,7 @@ import Base from '../../layouts/Base.astro';
 import { getCollection, render } from 'astro:content';
 import HeroImage from '../../components/HeroImage.astro';
 import Figure from '../../components/Figure.astro';
+import YouTube from '../../components/YouTube.astro';
 
 export async function getStaticPaths() {
   const items = (await getCollection('posts')).filter((e) => e.data.published);
@@ -21,6 +22,6 @@ const fmt = (x) => x.toISOString().slice(0, 10);
       <h1>{d.title}</h1>
     </header>
     <HeroImage prefix={d.imagePrefix} alt={d.heroAlt} />
-    <article class="prose serif"><Content components={{ Figure }} /></article>
+    <article class="prose serif"><Content components={{ Figure, YouTube }} /></article>
   </div>
 </Base>
