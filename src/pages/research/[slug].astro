@@ -3,7 +3,6 @@ import Base from '../../layouts/Base.astro';
 import { getCollection, render } from 'astro:content';
 import Figure from '../../components/Figure.astro';
 import YouTube from '../../components/YouTube.astro';
-import VideoHero from '../../components/VideoHero.astro';
 
 export async function getStaticPaths() {
   const items = (await getCollection('research')).filter((e) => e.data.published);
@@ -23,9 +22,13 @@ const shortenUrl = (u) => { const s = u.replace(/^https?:\/\//, ''); return s.st
 const gallery = d.gallery ?? [];
 const galUrl = (src) => (/^(https?:)?\//.test(src) ? src : `/images/uploads/${src}`);
 const awards = d.awards ?? [];
+const videos = d.videos ?? [];
 const hasAwards = awards.length > 0;
 const hasPhotos = gallery.length > 0;
-const hasTopBlock = (d.videos && d.videos.length > 0) || pubs.length > 0 || (d.highlights && d.highlights.length > 0) || hasAwards || hasPhotos;
+const hasVideos = videos.length > 0;
+const hasMedia = hasVideos || hasPhotos;
+const hasGlance = d.methods || d.dataSources || d.outputs || repoShort;
+const hasTopBlock = pubs.length > 0 || (d.highlights && d.highlights.length > 0) || hasAwards || hasMedia;
 
 const updates = (await getCollection('updates'))
   .filter((u) => u.data.published && u.data.project === entry.id)
@@ -34,6 +37,8 @@ const log = await Promise.all(updates.map(async (u) => ({
   id: u.id, data: u.data, Content: u.data.kind === 'post' ? null : (await render(u)).Content,
 })));
 const fmt = (x) => x.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
+
+const TROPHY = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 21h8M12 17v4M7 4h10v4a5 5 0 0 1-10 0V4zM5 4H4a2 2 0 0 0 0 4h1M19 4h1a2 2 0 0 1 0 4h-1"/></svg>`;
 ---
 <Base title={`${d.title} | Blue Leaf Labs`} description={d.summary}>
   <div class="wrap detail">
@@ -47,8 +52,6 @@ const fmt = (x) => x.toLocaleDateString('en-US', { year: 'numeric', month: 'shor
       <h1>{d.title}</h1>
       {d.question && <p class="detail-summary">{d.question}</p>}
     </header>
-
-    <VideoHero videos={d.videos} title={d.title} />
 
     {pubs.length > 0 && (
       <div class="pub">
@@ -74,14 +77,14 @@ const fmt = (x) => x.toLocaleDateString('en-US', { year: 'numeric', month: 'shor
       </div>
     )}
 
-    {(hasAwards || hasPhotos) && (
-      <div class="wins">
-        <div class={hasAwards && hasPhotos ? 'wins-grid' : 'wins-solo'}>
+    {hasMedia ? (
+      <div class="proj-body">
+        <div class="pb-left">
           {hasAwards && (
-            <div class="wins-awards">
+            <div class="awards-stack">
               {awards.map((a) => (
                 <div class="award">
-                  <span class="tro"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 21h8M12 17v4M7 4h10v4a5 5 0 0 1-10 0V4zM5 4H4a2 2 0 0 0 0 4h1M19 4h1a2 2 0 0 1 0 4h-1"/></svg></span>
+                  <span class="tro" set:html={TROPHY}></span>
                   <div>
                     <div class="a-title">{a.title}</div>
                     {(a.venue || a.year) && <div class="a-meta">{[a.venue, a.year].filter(Boolean).join(' · ')}</div>}
@@ -90,8 +93,21 @@ const fmt = (x) => x.toLocaleDateString('en-US', { year: 'numeric', month: 'shor
               ))}
             </div>
           )}
+          <div class="prose proj-prose"><Content components={{ Figure, YouTube }} /></div>
+        </div>
+        <div class="pb-right">
+          {hasVideos && (
+            <div class="pb-videos">
+              {videos.map((v) => (
+                <div class="vh-item">
+                  {v.label && <div class="vh-label">{v.label}</div>}
+                  <YouTube url={v.url} title={v.label ?? d.title} />
+                </div>
+              ))}
+            </div>
+          )}
           {hasPhotos && (
-            <div class="wins-photos">
+            <div class="pb-photos">
               <div class="pg-grid">
                 {gallery.map((g) => (
                   <figure>
@@ -104,48 +120,63 @@ const fmt = (x) => x.toLocaleDateString('en-US', { year: 'numeric', month: 'shor
           )}
         </div>
       </div>
+    ) : (
+      <div class="proj-single">
+        {hasAwards && (
+          <div class="awards-stack">
+            {awards.map((a) => (
+              <div class="award">
+                <span class="tro" set:html={TROPHY}></span>
+                <div>
+                  <div class="a-title">{a.title}</div>
+                  {(a.venue || a.year) && <div class="a-meta">{[a.venue, a.year].filter(Boolean).join(' · ')}</div>}
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
+        <div class="prose proj-prose"><Content components={{ Figure, YouTube }} /></div>
+      </div>
     )}
 
-    <div class="detail-grid">
-      <div>
-        <div class="prose"><Content components={{ Figure, YouTube }} /></div>
-
-        {log.length > 0 && (
-          <section class="project-log" aria-label="Project log">
-            <h2>Project log</h2>
-            <div class="log-list">
-              {log.map((u) => {
-                if (u.data.kind === 'post') {
-                  return (
-                    <a class="log-post" href={`/log/${u.id}`}>
-                      <div class="log-date">{fmt(u.data.date)}</div>
-                      <div class="log-title">{u.data.title}</div>
-                      {u.data.summary && <p class="log-sum">{u.data.summary}</p>}
-                      <span class="log-read">Read →</span>
-                    </a>
-                  );
-                }
-                const NoteBody = u.Content;
-                return (
-                  <div class="log-note">
-                    <div class="log-date">{fmt(u.data.date)}</div>
-                    <div class="log-title">{u.data.title}</div>
-                    <div class="log-body prose"><NoteBody components={{ Figure, YouTube }} /></div>
-                  </div>
-                );
-              })}
-            </div>
-          </section>
-        )}
+    {hasGlance && (
+      <div class="glance-bar" aria-label="Research at a glance">
+        <div class="gb-head">Research at a glance</div>
+        <div class="gb-grid">
+          {d.methods && <div class="gb-item"><div class="gb-key">Primary methods</div><div class="gb-val">{d.methods}</div></div>}
+          {d.dataSources && <div class="gb-item"><div class="gb-key">Data sources</div><div class="gb-val">{d.dataSources}</div></div>}
+          {d.outputs && <div class="gb-item"><div class="gb-key">Outputs</div><div class="gb-val">{d.outputs}</div></div>}
+          {repoShort && <div class="gb-item"><div class="gb-key">Code</div><div class="gb-val"><a href={d.repo}>{repoShort}</a></div></div>}
+        </div>
       </div>
+    )}
 
-      <aside class="glance" aria-label="Research at a glance">
-        <h2>Research at a glance</h2>
-        {d.methods && <div class="g-item"><div class="g-key">Primary methods</div><div class="g-val">{d.methods}</div></div>}
-        {d.dataSources && <div class="g-item"><div class="g-key">Data sources</div><div class="g-val">{d.dataSources}</div></div>}
-        {d.outputs && <div class="g-item"><div class="g-key">Outputs</div><div class="g-val">{d.outputs}</div></div>}
-        {repoShort && <div class="g-item"><div class="g-key">Code</div><div class="g-val"><a href={d.repo}>{repoShort}</a></div></div>}
-      </aside>
-    </div>
+    {log.length > 0 && (
+      <section class="project-log" aria-label="Project log">
+        <h2>Project log</h2>
+        <div class="log-list">
+          {log.map((u) => {
+            if (u.data.kind === 'post') {
+              return (
+                <a class="log-post" href={`/log/${u.id}`}>
+                  <div class="log-date">{fmt(u.data.date)}</div>
+                  <div class="log-title">{u.data.title}</div>
+                  {u.data.summary && <p class="log-sum">{u.data.summary}</p>}
+                  <span class="log-read">Read →</span>
+                </a>
+              );
+            }
+            const NoteBody = u.Content;
+            return (
+              <div class="log-note">
+                <div class="log-date">{fmt(u.data.date)}</div>
+                <div class="log-title">{u.data.title}</div>
+                <div class="log-body prose"><NoteBody components={{ Figure, YouTube }} /></div>
+              </div>
+            );
+          })}
+        </div>
+      </section>
+    )}
   </div>
 </Base>
