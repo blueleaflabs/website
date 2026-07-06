@@ -14,16 +14,16 @@ const d = entry.data;
 const { Content } = await render(entry);
 
 const repoShort = d.repo ? d.repo.replace('https://github.com/', 'github.com/').replace(/\/$/, '') : null;
-
-// publications: prefer the list; fall back to the legacy single field
 const pubs = (d.publications && d.publications.length)
   ? d.publications
   : (d.publicationUrl ? [{ url: d.publicationUrl, label: 'Published preprint' }] : []);
 const shortenUrl = (u) => { const s = u.replace(/^https?:\/\//, ''); return s.startsWith('doi.org/') ? s : s.split('/')[0]; };
 
-// gallery: explicit list, so it never collides with inline <Figure> images
 const gallery = d.gallery ?? [];
 const galUrl = (src) => (/^(https?:)?\//.test(src) ? src : `/images/uploads/${src}`);
+const awards = d.awards ?? [];
+const hasAwards = awards.length > 0;
+const hasPhotos = gallery.length > 0;
 
 const updates = (await getCollection('updates'))
   .filter((u) => u.data.published && u.data.project === entry.id)
@@ -46,31 +46,6 @@ const fmt = (x) => x.toLocaleDateString('en-US', { year: 'numeric', month: 'shor
       {d.question && <p class="detail-summary">{d.question}</p>}
     </header>
 
-    {d.awards && d.awards.length > 0 && (
-      <section class="awards" aria-label="Awards">
-        <h2>Awards</h2>
-        <div class="award-list">
-          {d.awards.map((a) => (
-            <div class="award">
-              <span class="tro"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 21h8M12 17v4M7 4h10v4a5 5 0 0 1-10 0V4zM5 4H4a2 2 0 0 0 0 4h1M19 4h1a2 2 0 0 1 0 4h-1"/></svg></span>
-              <div>
-                <div class="a-title">{a.title}</div>
-                {(a.venue || a.year) && <div class="a-meta">{[a.venue, a.year].filter(Boolean).join(' · ')}</div>}
-              </div>
-            </div>
-          ))}
-        </div>
-      </section>
-    )}
-
-    {d.highlights && d.highlights.length > 0 && (
-      <div class="chips">
-        {d.highlights.map((h) => (
-          <span class="chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>{h}</span>
-        ))}
-      </div>
-    )}
-
     {pubs.length > 0 && (
       <div class="pub">
         <span class="pub-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M16 13H8M16 17H8M10 9H8"/></svg></span>
@@ -87,23 +62,49 @@ const fmt = (x) => x.toLocaleDateString('en-US', { year: 'numeric', month: 'shor
       </div>
     )}
 
+    {d.highlights && d.highlights.length > 0 && (
+      <div class="chips">
+        {d.highlights.map((h) => (
+          <span class="chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>{h}</span>
+        ))}
+      </div>
+    )}
+
+    {(hasAwards || hasPhotos) && (
+      <div class="wins">
+        <div class={hasAwards && hasPhotos ? 'wins-grid' : 'wins-solo'}>
+          {hasAwards && (
+            <div class="wins-awards">
+              {awards.map((a) => (
+                <div class="award">
+                  <span class="tro"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 21h8M12 17v4M7 4h10v4a5 5 0 0 1-10 0V4zM5 4H4a2 2 0 0 0 0 4h1M19 4h1a2 2 0 0 1 0 4h-1"/></svg></span>
+                  <div>
+                    <div class="a-title">{a.title}</div>
+                    {(a.venue || a.year) && <div class="a-meta">{[a.venue, a.year].filter(Boolean).join(' · ')}</div>}
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
+          {hasPhotos && (
+            <div class="wins-photos">
+              <div class="pg-grid">
+                {gallery.map((g) => (
+                  <figure>
+                    <img src={galUrl(g.src)} alt={g.alt ?? g.caption ?? ''} loading="lazy" />
+                    {g.caption && <figcaption>{g.caption}</figcaption>}
+                  </figure>
+                ))}
+              </div>
+            </div>
+          )}
+        </div>
+      </div>
+    )}
+
     <div class="detail-grid">
       <div>
         <div class="prose"><Content components={{ Figure, YouTube }} /></div>
-
-        {gallery.length > 0 && (
-          <section class="proj-gallery" aria-label="Gallery">
-            <h2>From the build</h2>
-            <div class="pg-grid">
-              {gallery.map((g) => (
-                <figure>
-                  <img src={galUrl(g.src)} alt={g.alt ?? ''} loading="lazy" />
-                  {g.caption && <figcaption>{g.caption}</figcaption>}
-                </figure>
-              ))}
-            </div>
-          </section>
-        )}
 
         {log.length > 0 && (
           <section class="project-log" aria-label="Project log">

@@ -11,7 +11,7 @@
 export const org = {
   name: 'Blue Leaf Labs',
   legal: 'a registered 501(c)(3) nonprofit',
-  tagline: 'Climate systems research, documented in the open.',
+  tagline: 'Engineering climate solutions that make economic sense.',
   focus: 'Climate systems: hydroclimate, heat risk, water-energy',
   founded: '2025',
   email: 'hello@blueleaflabs.org',

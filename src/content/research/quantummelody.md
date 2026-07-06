@@ -29,12 +29,16 @@ awards:
 gallery:
   - src: "quantummelody-1.jpeg"
     alt: "Quantum vs Classical comparison"
+    caption: "Quantum vs Classical comparison"
   - src: "quantummelody-2.jpeg"
     alt: "Presenting QuantumMelody"
+    caption: "Presenting QuantumMelody"
   - src: "quantummelody-3.jpeg"
     alt: "Synopsys First Award, with my Java teacher Mr Terry Yu"
+    caption: "Synopsys First Award, with my Java teacher Mr Terry Yu"
   - src: "quantummelody-4.jpeg"
     alt: "Mayor's Award, with Mr Forrest Williams"
+    caption: "Mayor's Award, with Mr Forrest Williams"
 published: true
 ---
 
