@@ -259,8 +259,12 @@ section{padding:clamp(3.25rem,6.5vw,5rem) 0}
 .proj-single .proj-prose{max-width:70ch}
 .glance-bar{background:var(--paper-raised);border:1px solid var(--rule);border-radius:8px;overflow:hidden;margin-top:2.25rem;box-shadow:0 14px 34px -22px rgba(10,40,34,.4)}
 .gb-head{background:color-mix(in srgb,var(--accent) 8%,var(--paper-raised));color:var(--accent-deep);border-bottom:1px solid color-mix(in srgb,var(--accent) 25%,var(--line));font-family:'IBM Plex Mono',monospace;font-size:.72rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;padding:.85rem 1.4rem}
+.gb-code{display:flex;align-items:baseline;gap:.75rem;padding:.8rem 1.4rem;border-bottom:1px solid var(--line);flex-wrap:wrap}
+.gb-code .gb-key{margin-bottom:0}
+.gb-code a{font-family:'IBM Plex Mono',monospace;font-size:.9rem;color:var(--accent-deep);text-decoration:none;border-bottom:1px solid var(--rule)}
+.gb-code a:hover{border-bottom-color:var(--accent)}
 .gb-grid{display:grid;grid-template-columns:1fr}
-@media (min-width:760px){.gb-grid{grid-template-columns:repeat(4,1fr)}}
+@media (min-width:760px){.gb-grid{grid-template-columns:repeat(3,1fr)}}
 .gb-item{padding:1.05rem 1.4rem;border-bottom:1px solid var(--line)}
 .gb-item:last-child{border-bottom:none}
 @media (min-width:760px){.gb-item{border-bottom:none;border-right:1px solid var(--line)}.gb-item:last-child{border-right:none}}
@@ -270,6 +274,15 @@ section{padding:clamp(3.25rem,6.5vw,5rem) 0}
 .gb-list li{position:relative;padding-left:.95rem;margin-bottom:.4rem;font-size:.92rem;line-height:1.45;color:var(--ink)}
 .gb-list li:last-child{margin-bottom:0}
 .gb-list li::before{content:"";position:absolute;left:0;top:.52em;width:5px;height:5px;border-radius:50%;background:var(--accent)}
+.howflow{display:grid;grid-template-columns:1fr;gap:1.1rem;margin-top:1.5rem}
+@media (min-width:680px){.howflow{grid-template-columns:1fr 1fr}.hstep-merge{grid-column:1 / -1}}
+.hstep{background:var(--paper-raised);border:1px solid var(--line);border-radius:10px;padding:1.5rem}
+.hnum{font-family:'IBM Plex Mono',monospace;font-size:.78rem;font-weight:600;letter-spacing:.12em;color:var(--accent);margin-bottom:.65rem}
+.hstate{font-size:1.22rem;font-weight:600;line-height:1.22}
+.hq{color:var(--ink-2);margin-top:.5rem;font-size:1.02rem;line-height:1.5}
+.hstep-merge{background:color-mix(in srgb,var(--accent) 7%,var(--paper-raised));border-color:color-mix(in srgb,var(--accent) 28%,var(--line));border-top:3px solid var(--accent);display:flex;align-items:baseline;gap:1rem;flex-wrap:wrap}
+.hstep-merge .hnum{margin-bottom:0}
+.hstep-merge .hstate{font-size:1.35rem}
 .gb-val a{color:var(--accent-deep);text-decoration:none;border-bottom:1px solid var(--rule)}
 
 /* held-section banner (dev only) */
