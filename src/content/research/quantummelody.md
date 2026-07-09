@@ -42,4 +42,9 @@ gallery:
 published: true
 ---
 
-QuantumMelody explores the use of quantum and quantum-inspired computational models to analyze vocal music performance. The project encodes musical features such as pitch stability, timing, dynamics, and timbral characteristics into structured quantum circuits, enabling comparative analysis between performers or between a student and reference performance. By grouping features and leveraging entanglement within feature sets, the approach aims to capture relationships that are difficult to represent with classical models alone. The work serves as an exploratory investigation into novel representations for music analysis and evaluation.
+QuantumMelody explores quantum and quantum-inspired computational models for analyzing vocal music performance.
+
+- **Encoding:** Musical features like pitch stability, timing, dynamics, and timbral characteristics are mapped into structured quantum circuits
+- **Comparison:** Side-by-side analysis between performers, or between a student and a reference performance
+- **Why quantum:** Grouping features and using entanglement within feature sets allows the study to capture relationships that are hard to represent with classical models alone
+- **Conclusion:** Subject-matter entanglement can better analyze quality of vocal singing and contrast "master" and "student" tracks

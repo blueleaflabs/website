@@ -12,4 +12,9 @@ repo: "https://github.com/blueleaflabs/hydropulse"
 published: true
 ---
 
-HydroPulse focuses on detecting, characterizing, and contextualizing hydroclimate anomalies using multi-source observational data. The project aims to distinguish transient weather-driven deviations from longer-term climate signals by analyzing hydrologic variables across space and time. By constructing baselines tied to seasonal and regional regimes, HydroPulse evaluates departures in snowpack, precipitation, and related indicators to identify anomalous behavior. The emphasis is on reproducible anomaly definitions that remain interpretable across different hydroclimatic contexts.
+HydroPulse detects, characterizes, and contextualizes hydroclimate anomalies using multi-source observational data.
+
+- **Inputs:** Hydrologic variables (snowpack, precipitation, and related indicators) drawn from multiple observational sources across space and time
+- **Method:** Constructs baselines tied to seasonal and regional regimes, then measures departures against them
+- **Key distinction:** Separates transient, weather-driven deviations from longer-term climate signals
+- **Emphasis:** Reproducible anomaly definitions that stay interpretable across different hydroclimatic contexts

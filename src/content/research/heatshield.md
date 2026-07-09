@@ -15,4 +15,9 @@ videos:
 published: true
 ---
 
-HeatShield develops a data-driven framework for mapping and analyzing extreme heat risk at fine spatial resolution. The project integrates temperature data, air quality indicators, wildfire smoke exposure, land-use characteristics, and census-derived demographic variables to model compounded environmental and social vulnerability. By combining climate observations with population data, HeatShield identifies "double-burden" communities where exposure and sensitivity overlap. The resulting risk maps are designed to support targeted mitigation strategies, policy analysis, and equitable decision-making under increasing heat extremes.
+HeatShield develops a data-driven framework for mapping extreme heat risk at fine spatial resolution.
+
+- **Inputs:** Integrates temperature, air quality, wildfire smoke exposure, land-use characteristics, and census-derived demographics
+- **Method:** Combines climate observations with population data to model compounded environmental and social vulnerability
+- **Key output:** Identifies "double-burden" communities where exposure and sensitivity overlap
+- **Application:** Risk maps support targeted mitigation, policy analysis, and equitable decision-making under worsening heat extremes

@@ -36,4 +36,9 @@ awards:
 published: true
 ---
 
-OsmoFlux investigates the feasibility of harvesting usable electrical energy from salinity gradients in desalination brine using reverse electrodialysis (RED). The project combines experimental prototyping with physics-based modeling to study membrane performance, ion transport, and power output across varying salinity and flow conditions. Small-scale RED cells are designed and tested to generate repeatable electrical measurements, which are then used to quantify efficiency trends and inform system-level feasibility for integration into desalination infrastructure. Where experimental limits arise, computational models are developed to extrapolate performance and explore scaling behavior under realistic operating regimes, with ongoing work focused on validating models against experimental measurements.
+OsmoFlux investigates whether usable electrical energy can be harvested from the salinity gradients in desalination brine, using reverse electrodialysis (RED).
+
+- **Approach:** Physics-based modeling of reverse electrodialysis to analyze power generation, salinity reduction, and economic breakeven regimes
+- **Experimentation:** Small-scale RED test cells to create power curves and quantify efficiency trends
+- **Feasibility:** Model deployment at various global desalination facilities and evaluate optimal configurations
+- **Architecture:** Compare and contrast various RED architectures for retrofit at global desalination facilities

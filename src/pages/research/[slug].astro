@@ -18,6 +18,7 @@ const pubs = (d.publications && d.publications.length)
   ? d.publications
   : (d.publicationUrl ? [{ url: d.publicationUrl, label: 'Published preprint' }] : []);
 const shortenUrl = (u) => { const s = u.replace(/^https?:\/\//, ''); return s.startsWith('doi.org/') ? s : s.split('/')[0]; };
+const toBullets = (str) => str.split(';').map((x) => x.trim().replace(/\.$/, '')).filter(Boolean);
 
 const gallery = d.gallery ?? [];
 const galUrl = (src) => (/^(https?:)?\//.test(src) ? src : `/images/uploads/${src}`);
@@ -143,9 +144,9 @@ const TROPHY = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strok
       <div class="glance-bar" aria-label="Research at a glance">
         <div class="gb-head">Research at a glance</div>
         <div class="gb-grid">
-          {d.methods && <div class="gb-item"><div class="gb-key">Primary methods</div><div class="gb-val">{d.methods}</div></div>}
-          {d.dataSources && <div class="gb-item"><div class="gb-key">Data sources</div><div class="gb-val">{d.dataSources}</div></div>}
-          {d.outputs && <div class="gb-item"><div class="gb-key">Outputs</div><div class="gb-val">{d.outputs}</div></div>}
+          {d.methods && <div class="gb-item"><div class="gb-key">Primary methods</div><ul class="gb-list">{toBullets(d.methods).map((x) => (<li>{x}</li>))}</ul></div>}
+          {d.dataSources && <div class="gb-item"><div class="gb-key">Data sources</div><ul class="gb-list">{toBullets(d.dataSources).map((x) => (<li>{x}</li>))}</ul></div>}
+          {d.outputs && <div class="gb-item"><div class="gb-key">Outputs</div><ul class="gb-list">{toBullets(d.outputs).map((x) => (<li>{x}</li>))}</ul></div>}
           {repoShort && <div class="gb-item"><div class="gb-key">Code</div><div class="gb-val"><a href={d.repo}>{repoShort}</a></div></div>}
         </div>
       </div>
