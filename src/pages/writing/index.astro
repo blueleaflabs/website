@@ -2,7 +2,7 @@
 import Base from '../../layouts/Base.astro';
 import { getCollection } from 'astro:content';
 const posts = (await getCollection('posts'))
-  .filter((p) => p.data.published)
+  .filter((p) => p.data.published && !p.data.series)
   .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
 const fmt = (d) => d.toISOString().slice(0, 10);
 ---

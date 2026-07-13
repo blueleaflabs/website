@@ -1,6 +1,11 @@
 ---
 import Base from '../layouts/Base.astro';
+import { getCollection } from 'astro:content';
 const mailto = 'mailto:rohan.agarwal@blueleaflabs.org?subject=' + encodeURIComponent('Watt Workshops - next cohort');
+const wwPosts = (await getCollection('posts'))
+  .filter((p) => p.data.published && p.data.series === 'watt-workshops')
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+const fmt = (x) => x.toISOString().slice(0, 10);
 ---
 <Base title="Watt Workshops | Blue Leaf Labs" description="Watt Workshops is a hands-on environmental engineering camp for grades 7 to 10: five days from first principles to a project you research, design, and present.">
   <div class="wrap ww">
@@ -49,6 +54,22 @@ const mailto = 'mailto:rohan.agarwal@blueleaflabs.org?subject=' + encodeURICompo
       </div>
     </section>
 
+    {wwPosts.length > 0 && (
+      <section class="ww-sec">
+        <h2>Field notes</h2>
+        <p class="ww-secsub">Dispatches from the workshops: what students built, and what we learned running them.</p>
+        <div class="ww-notes">
+          {wwPosts.map((p) => (
+            <a class="ww-note" href={`/notes/${p.id}`}>
+              <span class="ww-note-date">{fmt(p.data.date)}</span>
+              <span class="ww-note-title">{p.data.title}</span>
+              <span class="ww-note-sum">{p.data.summary}</span>
+            </a>
+          ))}
+        </div>
+      </section>
+    )}
+
     <section class="ww-band">
       <h2>Ready to engineer the future?</h2>
       <p>Save your spot in the cohort starting July 13, 2026. Seats are capped at eight, so every student gets hands-on time.</p>
@@ -95,4 +116,10 @@ const mailto = 'mailto:rohan.agarwal@blueleaflabs.org?subject=' + encodeURICompo
   .ww-band p{color:var(--ink-2);margin:.6rem auto 0;max-width:56ch}
   .ww-band .ww-btn{margin-top:1.4rem}
   .ww-online{font-family:'IBM Plex Mono',monospace;font-size:.82rem;color:var(--ink-2);margin-top:1.4rem;padding-top:1.2rem;border-top:1px solid color-mix(in srgb,var(--accent) 22%,var(--line))}
+  .ww-notes{display:flex;flex-direction:column;gap:.7rem;margin-top:1.5rem}
+  .ww-note{display:block;background:var(--paper-raised);border:1px solid var(--line);border-radius:9px;padding:1.1rem 1.35rem;text-decoration:none;color:inherit}
+  .ww-note:hover{border-color:color-mix(in srgb,var(--accent) 28%,var(--line))}
+  .ww-note-date{display:block;font-family:'IBM Plex Mono',monospace;font-size:.72rem;color:var(--accent);letter-spacing:.05em}
+  .ww-note-title{display:block;font-size:1.12rem;font-weight:600;margin-top:.3rem}
+  .ww-note-sum{display:block;color:var(--ink-2);margin-top:.3rem;font-size:1rem}
 </style>

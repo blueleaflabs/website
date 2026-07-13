@@ -6,17 +6,27 @@ import Figure from '../../components/Figure.astro';
 import YouTube from '../../components/YouTube.astro';
 
 export async function getStaticPaths() {
-  const items = (await getCollection('posts')).filter((e) => e.data.published && !e.data.series);
-  return items.map((entry) => ({ params: { slug: entry.id }, props: { entry } }));
+  const posts = (await getCollection('posts')).filter((e) => e.data.published && e.data.series);
+  const projects = await getCollection('research');
+  return posts.map((entry) => {
+    const key = entry.data.series;
+    let source = { label: 'The Measured View', href: '/writing' };
+    if (key === 'watt-workshops') source = { label: 'Watt Workshops', href: '/watt-workshops' };
+    else {
+      const proj = projects.find((p) => p.id === key);
+      if (proj) source = { label: proj.data.title, href: `/research/${proj.id}` };
+    }
+    return { params: { slug: entry.id }, props: { entry, source } };
+  });
 }
-const { entry } = Astro.props;
+const { entry, source } = Astro.props;
 const d = entry.data;
 const { Content } = await render(entry);
 const fmt = (x) => x.toISOString().slice(0, 10);
 ---
-<Base title={`${d.title} | The Measured View`} description={d.summary}>
+<Base title={`${d.title} | Blue Leaf Labs`} description={d.summary}>
   <div class="wrap detail">
-    <a class="backlink" href="/writing">← The Measured View</a>
+    <a class="backlink" href={source.href}>← {source.label}</a>
     <header class="detail-head">
       <div class="kv"><span class="eyebrow">{d.tag}</span><span class="post-meta">{fmt(d.date)}{d.readingTime ? ` · ${d.readingTime}` : ''}</span></div>
       <h1>{d.title}</h1>

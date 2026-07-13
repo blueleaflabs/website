@@ -38,6 +38,10 @@ const log = await Promise.all(updates.map(async (u) => ({
   id: u.id, data: u.data, Content: u.data.kind === 'post' ? null : (await render(u)).Content,
 })));
 const fmt = (x) => x.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
+const fieldNotes = (await getCollection('posts'))
+  .filter((pp) => pp.data.published && pp.data.series === entry.id)
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+const fmtN = (x) => x.toISOString().slice(0, 10);
 
 const TROPHY = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 21h8M12 17v4M7 4h10v4a5 5 0 0 1-10 0V4zM5 4H4a2 2 0 0 0 0 4h1M19 4h1a2 2 0 0 1 0 4h-1"/></svg>`;
 ---
@@ -155,6 +159,21 @@ const TROPHY = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strok
           {d.outputs && <div class="gb-item"><div class="gb-key">Outputs</div><ul class="gb-list">{toBullets(d.outputs).map((x) => (<li>{x}</li>))}</ul></div>}
         </div>
       </div>
+    )}
+
+    {fieldNotes.length > 0 && (
+      <section class="field-notes" aria-label="Field notes">
+        <h2>Field notes</h2>
+        <div class="fn-list">
+          {fieldNotes.map((pp) => (
+            <a class="fn-item" href={`/notes/${pp.id}`}>
+              <div class="fn-date">{fmtN(pp.data.date)}</div>
+              <div class="fn-title">{pp.data.title}</div>
+              <p class="fn-sum">{pp.data.summary}</p>
+            </a>
+          ))}
+        </div>
+      </section>
     )}
 
     {log.length > 0 && (

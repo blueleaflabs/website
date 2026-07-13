@@ -77,6 +77,7 @@ const posts = defineCollection({
     date: z.coerce.date(),
     summary: z.string(),
     tag: z.string().default('Field notes'),
+    series: z.string().optional(),
     readingTime: z.string().optional(),
     imagePrefix: z.string().optional(),
     heroAlt: z.string().optional(),

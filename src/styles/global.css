@@ -263,6 +263,14 @@ section{padding:clamp(3.25rem,6.5vw,5rem) 0}
 .gb-code .gb-key{margin-bottom:0}
 .gb-code a{font-family:'IBM Plex Mono',monospace;font-size:.9rem;color:var(--accent-deep);text-decoration:none;border-bottom:1px solid var(--rule)}
 .gb-code a:hover{border-bottom-color:var(--accent)}
+.field-notes{margin-top:2.25rem}
+.field-notes>h2{font-size:1.3rem;margin-bottom:1rem}
+.fn-list{display:flex;flex-direction:column;gap:.7rem}
+.fn-item{display:block;background:var(--paper-raised);border:1px solid var(--line);border-radius:9px;padding:1.1rem 1.35rem;text-decoration:none;color:inherit}
+.fn-item:hover{border-color:color-mix(in srgb,var(--accent) 28%,var(--line))}
+.fn-date{font-family:'IBM Plex Mono',monospace;font-size:.72rem;color:var(--accent);letter-spacing:.05em}
+.fn-title{font-size:1.12rem;font-weight:600;margin-top:.3rem}
+.fn-sum{color:var(--ink-2);margin:.3rem 0 0;font-size:1rem}
 .gb-grid{display:grid;grid-template-columns:1fr}
 @media (min-width:760px){.gb-grid{grid-template-columns:repeat(3,1fr)}}
 .gb-item{padding:1.05rem 1.4rem;border-bottom:1px solid var(--line)}
