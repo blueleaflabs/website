@@ -1,6 +1,8 @@
 ---
 import Base from '../../layouts/Base.astro';
 import { getCollection } from 'astro:content';
+import WattRow from '../../components/WattRow.astro';
+import { wattPrograms } from '../../data/site';
 const items = (await getCollection('workshops'))
   .filter((w) => w.data.published)
   .sort((a, b) => a.data.order - b.data.order);
@@ -13,11 +15,7 @@ const items = (await getCollection('workshops'))
   <section>
     <div class="wrap">
       <div class="ledger">
-        <a class="lrow tight" href="/watt-workshops">
-          <div class="lcell label"><span class="lname">Watt Workshops</span></div>
-          <div class="lcell body"><p class="ldesc" style="margin:0">A five-day environmental engineering camp for grades 7 to 10: learn how engineers move water, beat the heat, and generate clean energy, then design your own answer to a real climate challenge.</p></div>
-          <div class="lcell meta"><span class="status">Enrolling</span></div>
-        </a>
+        {wattPrograms.map((w) => <WattRow program={w} />)}
         {items.map((w) => (
           <a class="lrow tight" href={`/workshops/${w.id}`}>
             <div class="lcell label"><span class="lname">{w.data.title}</span></div>

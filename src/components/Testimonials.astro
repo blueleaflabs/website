@@ -1,0 +1,36 @@
+---
+// Testimonials block for any Watt Workshops page. Styles live in src/styles/watt.css.
+// items: [{ name, role, rating?, quotes: [{ prompt?, text }] }]
+interface Quote { prompt?: string; text: string }
+interface Item { name: string; role?: string; rating?: number; quotes: Quote[] }
+interface Props { heading?: string; sub?: string; items: Item[] }
+const { heading = 'Testimonials', sub, items } = Astro.props;
+---
+{items.length > 0 && (
+  <section class="ww-sec">
+    <h2>{heading}</h2>
+    {sub && <p class="ww-secsub">{sub}</p>}
+    <div class="ww-tms">
+      {items.map((t) => (
+        <figure class="ww-tm">
+          <div class="ww-tm-quotes">
+            {t.quotes.map((q) => (
+              <blockquote>
+                {q.prompt && <span class="ww-tm-prompt">{q.prompt}</span>}
+                <p>&ldquo;{q.text}&rdquo;</p>
+              </blockquote>
+            ))}
+          </div>
+          <figcaption>
+            <span class="ww-tm-who"><strong>{t.name}</strong>{t.role && <span>{t.role}</span>}</span>
+            {t.rating && (
+              <span class="ww-tm-rating" aria-label={`Rated ${t.rating} out of 5`}>
+                <span class="n">{t.rating}/5</span><span class="l">Overall rating</span>
+              </span>
+            )}
+          </figcaption>
+        </figure>
+      ))}
+    </div>
+  </section>
+)}

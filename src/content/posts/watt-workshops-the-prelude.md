@@ -2,7 +2,7 @@
 title: "Watt Workshops, the prelude"
 date: 2026-07-13
 summary: "A few hours before the first cohort kicks off: what I expect from the debate, the lectures, and the last lesson that matters most."
-series: "watt-workshops"
+series: "watt-workshops-summer-camp"
 published: true
 ---
 

@@ -1,0 +1,11 @@
+---
+// One ledger row for a Watt Workshops program (see wattPrograms in src/data/site.ts).
+// Used by the homepage and the /workshops index.
+interface Props { program: { name: string; href: string; status: string; summary: string } }
+const { program: w } = Astro.props;
+---
+<a class="lrow tight" href={w.href}>
+  <div class="lcell label"><span class="lname">{w.name}</span></div>
+  <div class="lcell body"><p class="ldesc" style="margin:0">{w.summary}</p></div>
+  <div class="lcell meta"><span class={`status${w.status === 'Complete' ? ' complete' : ''}`}>{w.status}</span></div>
+</a>

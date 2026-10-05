@@ -1,0 +1,147 @@
+---
+import '../styles/watt.css';
+import Base from '../layouts/Base.astro';
+import { getCollection } from 'astro:content';
+const register = '/watt-workshops/register';
+const wwPosts = (await getCollection('posts'))
+  .filter((p) => p.data.published && p.data.series === 'watt-workshops')
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+const fmt = (x) => x.toISOString().slice(0, 10);
+// Run of show for the next workshop (minutes).
+const schedule = [
+  ['Intro and Icebreakers', 10],
+  ['Lecture', 30],
+  ['Trace Your Water Activity', 20],
+  ['Snack break', 5],
+  ['Research', 30],
+  ['Present', 15],
+  ['Close-out', 10],
+];
+---
+<Base title="Watt Workshops 2026-2027 | Blue Leaf Labs" description="Learn about local water, wattage, and waste issues at Watt Workshops. Next workshop: Santa Clara County Water, Sunday, November 8, 2026 at Quinlan Community Center, Cupertino. Free.">
+  <div class="wf">
+    <div class="wf-hero">
+      <div class="wrap">
+        <div class="wf-hero-top">
+          <span class="wf-label">Blue Leaf Labs presents</span>
+          <span class="wf-pill">Watt Workshops · 2026-2027</span>
+        </div>
+        <h1>Learn about local water, wattage, and waste issues at Watt Workshops.</h1>
+        <p class="wf-lede">Middle school students already know how conservation efforts work. At Watt Workshops, they'll learn how environmental issues and climate change affect them on a daily basis in Santa Clara Valley. They'll learn where their water and energy come from, understand the ways our area disposes of waste, and brainstorm solutions to the most pressing problems we face here in the Valley.</p>
+        <div class="wf-rule" aria-hidden="true"></div>
+      </div>
+    </div>
+
+    <div class="wf-strip">
+      <div class="wrap">
+        <div class="wf-next-head">
+          <div>
+            <span class="wf-label">Next workshop · Watt Workshops #1</span>
+            <h2>Santa Clara County Water: A Science Fair Approach</h2>
+            <p class="sub">Water Sources, Quality and Conservation Challenges</p>
+          </div>
+          <a class="wf-btn" href={register}>Sign up</a>
+        </div>
+        <div class="wf-facts">
+          <div class="wf-fact">
+            <span class="wf-label">When</span>
+            <div class="big">Sunday, November 8, 2026</div>
+            <div class="small">1:00 to 3:00 PM</div>
+          </div>
+          <div class="wf-fact">
+            <span class="wf-label">Where</span>
+            <div class="big">Quinlan Community Center</div>
+            <div class="small">Social Room · 10185 N. Stelling Rd, Cupertino</div>
+          </div>
+          <div class="wf-fact">
+            <span class="wf-label">Teacher</span>
+            <div class="big">Rohan Agarwal</div>
+            <ul>
+              <li>4x Science Fair Award Winner - Synopsys, MTFC, Genius Olympiad</li>
+              <li>Junior at Monta Vista High School</li>
+              <li>Founder of Blue Leaf Labs</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="wf-body">
+      <div class="wrap">
+        <div class="wf-cols">
+          <div>
+            <span class="wf-label">Why come</span>
+            <h2 class="wf-h2">Leave with a framework for building successful science fair projects.</h2>
+            <ol class="wf-steps">
+              <li><div><div class="t">Start with a real local problem</div><div class="d">Santa Clara County's water is the working example.</div></div></li>
+              <li><div><div class="t">Go to primary sources</div><div class="d">Work from published data and reports, not summaries of them.</div></div></li>
+              <li><div><div class="t">Find the question you can measure</div><div class="d">Turn a broad topic into something you can test.</div></div></li>
+              <li><div><div class="t">Weigh the trade-offs, then pitch</div><div class="d">Present your idea clearly and defend your choices.</div></div></li>
+            </ol>
+          </div>
+          <div>
+            <span class="wf-label">In two hours you will</span>
+            <ul class="wf-bullets">
+              <li>Learn where Santa Clara County's water comes from</li>
+              <li>Look at the county's water quality and conservation challenges</li>
+              <li>Practice turning a local problem into a science fair project idea</li>
+            </ul>
+            <dl class="wf-card">
+              <dt>Who</dt><dd>Grades 7-10</dd>
+              <dt>When</dt><dd>Nov 8, 2026 · 1:00 to 3:00 PM</dd>
+              <dt>Where</dt><dd>Quinlan Community Center</dd>
+              <dt>Bring</dt><dd>Laptop and a pencil</dd>
+              <dt>Cost</dt><dd class="cost">FREE</dd>
+              <dt>Sign up</dt><dd><a href={register}>blueleaflabs.org/watt-workshops/register</a></dd>
+            </dl>
+          </div>
+        </div>
+
+        <div class="wf-cols wf-sec">
+          <div>
+            <span class="wf-label">Schedule</span>
+            <h2 class="wf-h2">Two hours, start to finish.</h2>
+            <ul class="wf-sched">
+              {schedule.map(([a, m]) => (<li><span class="a">{a}</span><span class="m">{m} min</span></li>))}
+            </ul>
+          </div>
+          <div>
+            <span class="wf-label">Why join</span>
+            <h2 class="wf-h2">Why should you join Watt Workshops?</h2>
+            <ul class="wf-why" style="grid-template-columns:1fr">
+              <li>Learn about local environmental issues</li>
+              <li>Practice proposing solutions to these problems</li>
+              <li>Learn how to present your solutions</li>
+              <li>Build up to science fair participation</li>
+            </ul>
+          </div>
+        </div>
+
+        {wwPosts.length > 0 && (
+          <div class="ww-sec wf-sec">
+            <h2>Field notes</h2>
+            <p class="ww-secsub">Dispatches from the workshops: what students built, and what we learned running them.</p>
+            <div class="ww-notes">
+              {wwPosts.map((p) => (
+                <a class="ww-note" href={`/notes/${p.id}`}>
+                  <span class="ww-note-date">{fmt(p.data.date)}</span>
+                  <span class="ww-note-title">{p.data.title}</span>
+                  <span class="ww-note-sum">{p.data.summary}</span>
+                </a>
+              ))}
+            </div>
+          </div>
+        )}
+
+        <div class="wf-close">
+          <div>
+            <h2>Next workshop: November 8, 2026 · Water Sources</h2>
+            <p>Sunday, 1:00 to 3:00 PM at Quinlan Community Center. Free for grades 7-10.</p>
+          </div>
+          <a class="wf-btn amber" href={register}>Sign up</a>
+        </div>
+        <p class="wf-past">Watt Workshops began as a five-day camp in July 2026. <a href="/watt-workshops-summer-camp">See the Watt Workshops Summer Camp →</a></p>
+      </div>
+    </div>
+  </div>
+</Base>

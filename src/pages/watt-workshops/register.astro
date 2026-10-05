@@ -1,0 +1,152 @@
+---
+import '../../styles/watt.css';
+import Base from '../../layouts/Base.astro';
+import { wattSignup } from '../../data/site';
+---
+<Base title="Sign up | Watt Workshops | Blue Leaf Labs" description="Sign up for Watt Workshops #1: Santa Clara County Water, Sunday, November 8, 2026, 1:00 to 3:00 PM at Quinlan Community Center, Cupertino. Free for grades 7-10.">
+  <div class="wf">
+    <div class="wf-hero">
+      <div class="wrap">
+        <div class="wf-hero-top">
+          <span class="wf-label">Blue Leaf Labs presents</span>
+          <span class="wf-pill">Watt Workshops #1</span>
+        </div>
+        <h1>Sign up for Watt Workshops</h1>
+        <p class="wf-lede">Santa Clara County Water: A Science Fair Approach · Sunday, November 8, 2026 · 1:00 to 3:00 PM · Quinlan Community Center, Cupertino · Free</p>
+        <div class="wf-rule" aria-hidden="true"></div>
+      </div>
+    </div>
+
+    <div class="wf-body">
+      <div class="wrap">
+        <div class="wf-form-wrap">
+          <form class="wf-form" id="ww-signup" data-endpoint={wattSignup.endpoint} data-fallback={wattSignup.fallbackEmail} data-workshop={wattSignup.workshop} novalidate>
+            <div class="wf-field">
+              <label for="ww-first">First name</label>
+              <input type="text" id="ww-first" name="firstName" autocomplete="given-name" maxlength="80" required />
+            </div>
+            <div class="wf-field">
+              <label for="ww-last">Last name</label>
+              <input type="text" id="ww-last" name="lastName" autocomplete="family-name" maxlength="80" required />
+            </div>
+            <div class="wf-field">
+              <label for="ww-grade">Grade</label>
+              <select id="ww-grade" name="grade" required>
+                <option value="">Select grade</option>
+                {wattSignup.grades.map((g) => <option value={g}>Grade {g}</option>)}
+              </select>
+            </div>
+            <div class="wf-field">
+              <label for="ww-email">Email address</label>
+              <input type="email" id="ww-email" name="email" autocomplete="email" maxlength="160" required />
+            </div>
+            <fieldset class="wf-field full">
+              <legend>Current Math Olympiads student?</legend>
+              <div class="wf-radios">
+                <label><input type="radio" name="olympiads" value="Yes" required /> Yes</label>
+                <label><input type="radio" name="olympiads" value="No" /> No</label>
+              </div>
+            </fieldset>
+            <div class="wf-field full" id="ww-class-field" hidden>
+              <label for="ww-class">Which Math Olympiads class are you in?</label>
+              <select id="ww-class" name="olympiadsClass">
+                <option value="">Select your class</option>
+                {wattSignup.olympiadsClasses.map((c) => <option value={c}>{c}</option>)}
+              </select>
+            </div>
+            <div class="wf-field full">
+              <label for="ww-interest">What is your primary area of interest?</label>
+              <textarea id="ww-interest" name="interest" maxlength="1000"></textarea>
+            </div>
+            <div class="wf-hp" aria-hidden="true">
+              <label for="ww-website">Leave this field empty</label>
+              <input type="text" id="ww-website" name="website" tabindex="-1" autocomplete="off" />
+            </div>
+            <p class="wf-note full">If you are under 13, please have a parent or guardian fill out this form. We use this information only to run the workshop. See our <a href="/privacy-policy">privacy policy</a>.</p>
+            <div class="wf-msg err full" id="ww-error" role="alert" hidden></div>
+            <div class="full"><button class="wf-btn" type="submit" id="ww-submit">Sign up</button></div>
+          </form>
+
+          <div class="wf-done" id="ww-done" tabindex="-1" hidden>
+            <h2>You're signed up.</h2>
+            <p>See you on Sunday, November 8, 2026 at 1:00 PM in the Social Room at Quinlan Community Center, 10185 N. Stelling Rd, Cupertino. Bring a laptop and a pencil.</p>
+            <p><a href="/watt-workshops">← Back to Watt Workshops</a></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</Base>
+<script>
+  const form = document.getElementById('ww-signup') as HTMLFormElement | null;
+  if (form) {
+    const classField = document.getElementById('ww-class-field')!;
+    const classSelect = document.getElementById('ww-class') as HTMLSelectElement;
+    const errorBox = document.getElementById('ww-error')!;
+    const done = document.getElementById('ww-done')!;
+    const submit = document.getElementById('ww-submit') as HTMLButtonElement;
+
+    // The class dropdown only appears, and is only required, for current Math Olympiads students.
+    const syncClass = () => {
+      const yes = (form.elements.namedItem('olympiads') as RadioNodeList).value === 'Yes';
+      classField.hidden = !yes;
+      classSelect.required = yes;
+      if (!yes) classSelect.value = '';
+    };
+    form.querySelectorAll('input[name="olympiads"]').forEach((r) => r.addEventListener('change', syncClass));
+    syncClass();
+
+    const fail = (msg: string) => {
+      errorBox.textContent = msg;
+      errorBox.hidden = false;
+      submit.disabled = false;
+      submit.textContent = 'Sign up';
+    };
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      errorBox.hidden = true;
+      if (!form.checkValidity()) {
+        form.reportValidity();
+        return;
+      }
+      const data = Object.fromEntries(new FormData(form).entries()) as Record<string, string>;
+      data.workshop = form.dataset.workshop ?? '';
+      const endpoint = form.dataset.endpoint;
+
+      if (!endpoint) {
+        // No Google Sheet connected yet: open a pre-filled email instead.
+        const body = [
+          `Workshop: ${data.workshop}`,
+          `First name: ${data.firstName}`,
+          `Last name: ${data.lastName}`,
+          `Grade: ${data.grade}`,
+          `Email address: ${data.email}`,
+          `Current Math Olympiads student: ${data.olympiads}`,
+          `Math Olympiads class: ${data.olympiadsClass || '-'}`,
+          `Primary area of interest: ${data.interest || '-'}`,
+        ].join('\n');
+        window.location.href = `mailto:${form.dataset.fallback}?subject=${encodeURIComponent('Watt Workshops signup')}&body=${encodeURIComponent(body)}`;
+        return;
+      }
+
+      submit.disabled = true;
+      submit.textContent = 'Sending...';
+      try {
+        // text/plain keeps this a "simple" request, which Google Apps Script accepts cross-origin.
+        const res = await fetch(endpoint, {
+          method: 'POST',
+          headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+          body: JSON.stringify(data),
+        });
+        const out = await res.json();
+        if (!out.ok) throw new Error(out.error || 'Signup failed');
+        form.hidden = true;
+        done.hidden = false;
+        done.focus();
+      } catch {
+        fail(`We could not send your signup. Please try again, or email ${form.dataset.fallback}.`);
+      }
+    });
+  }
+</script>

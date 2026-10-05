@@ -4,6 +4,7 @@ import { getCollection, render } from 'astro:content';
 import HeroImage from '../../components/HeroImage.astro';
 import Figure from '../../components/Figure.astro';
 import YouTube from '../../components/YouTube.astro';
+import { wattSeries } from '../../data/site';
 
 export async function getStaticPaths() {
   const posts = (await getCollection('posts')).filter((e) => e.data.published && e.data.series);
@@ -11,7 +12,7 @@ export async function getStaticPaths() {
   return posts.map((entry) => {
     const key = entry.data.series;
     let source = { label: 'The Measured View', href: '/writing' };
-    if (key === 'watt-workshops') source = { label: 'Watt Workshops', href: '/watt-workshops' };
+    if (key && wattSeries[key]) source = wattSeries[key];
     else {
       const proj = projects.find((p) => p.id === key);
       if (proj) source = { label: proj.data.title, href: `/research/${proj.id}` };

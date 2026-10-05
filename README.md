@@ -147,13 +147,35 @@ The homepage's multi-pillar grid returns automatically once two or more sections
 
 ---
 
+## 8. Watt Workshops pages and the signup form
+
+- `/watt-workshops` is the 2026-2027 program page; `/watt-workshops-summer-camp` is the completed
+  July 2026 camp; `/watt-workshops/register` is the signup form.
+- The two listing lines (nav flyout, homepage, `/workshops`) come from `wattPrograms` in
+  `src/data/site.ts`. Shared styles are in `src/styles/watt.css`.
+- Form options (grades, Math Olympiads class times) are in `wattSignup` in `src/data/site.ts`.
+
+**Connect the form to a Google Sheet (one time):**
+1. Create a Google Sheet (e.g. "Watt Workshops signups").
+2. In the sheet: **Extensions -> Apps Script**. Replace the editor contents with
+   `integrations/watt-signup.gs` and save.
+3. **Deploy -> New deployment -> Web app**. Execute as: **Me**. Who has access: **Anyone**.
+   Authorize when prompted, then copy the web app URL (ends in `/exec`).
+4. Paste that URL into `wattSignup.endpoint` in `src/data/site.ts`, commit, and push.
+
+Each signup then lands as a row in the sheet's "Signups" tab. Until `endpoint` is set, the form
+opens a pre-filled email to `wattSignup.fallbackEmail` instead. If you later edit the script,
+use **Deploy -> Manage deployments -> Edit -> New version** so the URL stays the same.
+
+---
+
 ## Structure
 
 ```
 src/
   content/{research,posts,workshops,talks}/   Markdown content (CMS-edited)
   content.config.ts                           collection schemas
-  data/site.ts                                org facts, nav, live sections
+  data/site.ts                                org facts, nav, live sections, Watt Workshops programs + signup config
   layouts/Base.astro                          head, fonts, header, footer
   components/                                 Header, Footer
   pages/                                      routes (slugs preserved)
@@ -162,4 +184,6 @@ public/
   admin/                                      Sveltia CMS (config.yml, index.html)
   images/                                     image assets + CMS uploads/
   _redirects                                  old blog paths -> new
+integrations/
+  watt-signup.gs                              Google Apps Script behind the signup form
 ```

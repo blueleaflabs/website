@@ -1,5 +1,5 @@
 ---
-import { nav } from '../data/site';
+import { nav, wattPrograms } from '../data/site';
 import { getCollection } from 'astro:content';
 const path = Astro.url.pathname;
 const isCurrent = (p: string) => path === p || path.startsWith(p + '/');
@@ -11,9 +11,7 @@ const flyoutMap: Record<string, { label: string; href: string; more?: boolean }[
     ...projects.map((p) => ({ label: p.data.title, href: `/research/${p.id}` })),
     { label: 'All research →', href: '/research', more: true },
   ],
-  '/workshops': [
-    { label: 'Watt Workshops', href: '/watt-workshops' },
-  ],
+  '/workshops': wattPrograms.map((w) => ({ label: w.name, href: w.href })),
 };
 ---
 <header class="site">
