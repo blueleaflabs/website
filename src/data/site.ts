@@ -94,7 +94,7 @@ export const wattSessions = [
     venue: 'Quinlan Community Center',
     room: 'Social Room',
     address: '10185 N. Stelling Rd, Cupertino',
-    grades: '7-10',
+    grades: '6-8',
     bring: 'Laptop and a pencil',
     cost: 'FREE',
     badge: 'Filling fast',
@@ -168,7 +168,7 @@ export const wattSessionLabel = (w?: WattSession) =>
 export const wattSignup = {
   endpoint: 'https://script.google.com/macros/s/AKfycbxil9DCGVOL8f_5ZcJ6qizzFEsrk6mJClTsWV_7cUFcag4LpyUHsGx31QkinNDZNBX-sA/exec',
   fallbackEmail: 'rohan.agarwal@blueleaflabs.org',
-  grades: ['7', '8', '9', '10'],
+  grades: ['6', '7', '8'],
   olympiadsClasses: [
     'Monday 6:30 pm',
     'Tuesday 4:00 pm', 'Tuesday 5:20 pm', 'Tuesday 6:40 pm', 'Tuesday 8:00 pm',
