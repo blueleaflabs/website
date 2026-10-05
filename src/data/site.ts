@@ -81,6 +81,8 @@ export const wattSeries: Record<string, { label: string; href: string }> = {
 //   date:  YYYY-MM-DD (Pacific time)
 //   badge: optional short note shown beside the signup title,
 //          e.g. 'Filling fast'. Delete the line to hide it.
+//   noShow: optional no-show policy shown on the signup form
+//          while this workshop is the one being signed up for.
 // ------------------------------------------------------------
 export const wattSessions = [
   {
@@ -98,6 +100,11 @@ export const wattSessions = [
     bring: 'Laptop and a pencil',
     cost: 'FREE',
     badge: 'Filling fast',
+    // Shown on the signup form for this workshop only. `lead` is bold. Delete the block to hide it.
+    noShow: {
+      lead: 'Mr. G. will assess a $35 fee for participants who sign up but do not attend.',
+      rest: 'We have limited space, and although all materials are provided, we expect students who sign up to show up. Please only register if you are confident you will be there!',
+    },
     // "Why come" block
     headline: 'Leave with a framework for building successful science fair projects.',
     steps: [

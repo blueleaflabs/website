@@ -65,6 +65,7 @@ const w = nextWattSession();
               <label for="ww-website">Leave this field empty</label>
               <input type="text" id="ww-website" name="website" tabindex="-1" autocomplete="off" />
             </div>
+            <p class="wf-policy full" id="ww-noshow" hidden={!w?.noShow}>No-show policy: <strong id="ww-noshow-lead">{w?.noShow?.lead}</strong> <span id="ww-noshow-rest">{w?.noShow?.rest}</span></p>
             <p class="wf-note full">If you are under 13, please have a parent or guardian fill out this form. We use this information only to run the workshop. See our <a href="/privacy-policy">privacy policy</a>.</p>
             <div class="wf-msg err full" id="ww-error" role="alert" hidden></div>
             <div class="full"><button class="wf-btn" type="submit" id="ww-submit">Sign up</button></div>
@@ -91,6 +92,10 @@ const w = nextWattSession();
     set('ww-when', w ? wattDate(w.date) : 'date coming soon');
     set('ww-lede', w ? `${w.title} · ${w.time} · ${w.venue}, ${w.address.split(', ').pop()} · Grades ${w.grades} · ${w.cost}` : 'Sign up and we will email you when the next date is set.');
     set('ww-done-text', w ? `See you on ${wattDate(w.date)}, ${w.time}, in the ${w.room} at ${w.venue}, ${w.address}. Bring: ${w.bring}.` : 'We will email you when the next workshop date is set.');
+    set('ww-noshow-lead', w?.noShow?.lead ?? '');
+    set('ww-noshow-rest', w?.noShow?.rest ?? '');
+    const noShow = document.getElementById('ww-noshow');
+    if (noShow) noShow.hidden = !w?.noShow;
     const badge = document.getElementById('ww-badge');
     if (badge) { badge.textContent = w?.badge ?? ''; badge.hidden = !w?.badge; }
 

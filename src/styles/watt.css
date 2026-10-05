@@ -153,3 +153,5 @@
 .wf-back{color:rgba(255,255,255,.82);text-decoration:none}
 .wf-back:hover{color:#fff}
 .wf-ledger{margin-top:1.4rem;border-top:1.5px solid var(--wf-green);border-bottom:1px solid var(--rule)}
+.wf-policy{background:var(--wf-card);border-left:4px solid var(--wf-amber);border-radius:8px;padding:.95rem 1.1rem;color:var(--ink);font-size:.98rem}
+.wf-policy strong{color:var(--wf-green)}
