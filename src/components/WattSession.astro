@@ -1,0 +1,82 @@
+---
+// One Watt Workshops session, in the flyer layout: amber facts strip, why-come steps,
+// outcomes, facts card, schedule. Used by the series page (/watt-workshops) for the next
+// session and by each session's own page (/watt-workshops/<slug>). Data: wattSessions in site.ts.
+// Slots: default = right-hand column beside the schedule; "after" = anything below, inside the body.
+import { wattDate, wattStatus, wattTeacher, type WattSession } from '../data/site';
+interface Props { session: WattSession; lead?: string; linkTitle?: boolean }
+const { session: w, lead, linkTitle = false } = Astro.props;
+const open = wattStatus(w) === 'Enrolling';
+const register = '/watt-workshops/register';
+const label = lead ?? (open ? 'Next workshop' : 'Past workshop');
+---
+<div class="wf-strip">
+  <div class="wrap">
+    <div class="wf-next-head">
+      <div>
+        <span class="wf-label">{label} · Watt Workshops #{w.number}</span>
+        <h2>{linkTitle ? <a href={`/watt-workshops/${w.slug}`}>{w.title}</a> : w.title}</h2>
+        <p class="sub">{w.subtitle}</p>
+      </div>
+      {open ? <a class="wf-btn" href={register}>Sign up</a> : <span class="wf-btn done">Complete</span>}
+    </div>
+    <div class="wf-facts">
+      <div class="wf-fact">
+        <span class="wf-label">When</span>
+        <div class="big">{wattDate(w.date)}</div>
+        <div class="small">{w.time}</div>
+      </div>
+      <div class="wf-fact">
+        <span class="wf-label">Where</span>
+        <div class="big">{w.venue}</div>
+        <div class="small">{w.room} · {w.address}</div>
+      </div>
+      <div class="wf-fact">
+        <span class="wf-label">Teacher</span>
+        <div class="big">{wattTeacher.name}</div>
+        <ul>{wattTeacher.points.map((x) => <li>{x}</li>)}</ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="wf-body">
+  <div class="wrap">
+    <div class="wf-cols">
+      <div>
+        <span class="wf-label">Why come</span>
+        <h2 class="wf-h2">{w.headline}</h2>
+        <ol class="wf-steps">
+          {w.steps.map((x) => (<li><div><div class="t">{x.t}</div><div class="d">{x.d}</div></div></li>))}
+        </ol>
+      </div>
+      <div>
+        <span class="wf-label">In two hours you will</span>
+        <ul class="wf-bullets">{w.outcomes.map((x) => <li>{x}</li>)}</ul>
+        <dl class="wf-card">
+          <dt>Who</dt><dd>Grades {w.grades}</dd>
+          <dt>When</dt><dd>{wattDate(w.date, 'short')} · {w.time}</dd>
+          <dt>Where</dt><dd>{w.venue}</dd>
+          <dt>Bring</dt><dd>{w.bring}</dd>
+          <dt>Cost</dt><dd class="cost">{w.cost}</dd>
+          {open
+            ? <Fragment><dt>Sign up</dt><dd><a href={register}>blueleaflabs.org/watt-workshops/register</a></dd></Fragment>
+            : <Fragment><dt>Status</dt><dd>Complete</dd></Fragment>}
+        </dl>
+      </div>
+    </div>
+
+    <div class="wf-cols wf-sec">
+      <div>
+        <span class="wf-label">Schedule</span>
+        <h2 class="wf-h2">Two hours, start to finish.</h2>
+        <ul class="wf-sched">
+          {w.schedule.map(([a, m]) => (<li><span class="a">{a}</span><span class="m">{m} min</span></li>))}
+        </ul>
+      </div>
+      <div><slot /></div>
+    </div>
+
+    <slot name="after" />
+  </div>
+</div>

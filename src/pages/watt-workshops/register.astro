@@ -1,18 +1,21 @@
 ---
 import '../../styles/watt.css';
 import Base from '../../layouts/Base.astro';
-import { wattSignup } from '../../data/site';
+import { wattSignup, nextWattSession, wattDate, wattSessionLabel } from '../../data/site';
+// Built with the next session; the script below re-checks the date in the browser so the form rolls over by itself.
+const w = nextWattSession();
 ---
-<Base title="Sign up | Watt Workshops | Blue Leaf Labs" description="Sign up for Watt Workshops #1: Santa Clara County Water, Sunday, November 8, 2026, 1:00 to 3:00 PM at Quinlan Community Center, Cupertino. Free for grades 7-10.">
+<Base title="Sign up | Watt Workshops | Blue Leaf Labs" description="Sign up for the next Watt Workshops session from Blue Leaf Labs in Cupertino.">
   <div class="wf">
     <div class="wf-hero">
       <div class="wrap">
         <div class="wf-hero-top">
           <span class="wf-label">Blue Leaf Labs presents</span>
-          <span class="wf-pill">Watt Workshops #1</span>
+          <span class="wf-pill" id="ww-pill">{w ? `Watt Workshops #${w.number}` : 'Watt Workshops'}</span>
         </div>
-        <h1>Sign up for Watt Workshops</h1>
-        <p class="wf-lede">Santa Clara County Water: A Science Fair Approach · Sunday, November 8, 2026 · 1:00 to 3:00 PM · Quinlan Community Center, Cupertino · Free</p>
+        <h1><span class="wf-kicker">Sign up</span>Next Workshop - <span id="ww-when">{w ? wattDate(w.date) : 'date coming soon'}</span></h1>
+        <p class="wf-badge" id="ww-badge" hidden={!w?.badge}>{w?.badge}</p>
+        <p class="wf-lede" id="ww-lede">{w ? `${w.title} · ${w.time} · ${w.venue}, ${w.address.split(', ').pop()} · Grades ${w.grades} · ${w.cost}` : 'Sign up and we will email you when the next date is set.'}</p>
         <div class="wf-rule" aria-hidden="true"></div>
       </div>
     </div>
@@ -20,7 +23,7 @@ import { wattSignup } from '../../data/site';
     <div class="wf-body">
       <div class="wrap">
         <div class="wf-form-wrap">
-          <form class="wf-form" id="ww-signup" data-endpoint={wattSignup.endpoint} data-fallback={wattSignup.fallbackEmail} data-workshop={wattSignup.workshop} novalidate>
+          <form class="wf-form" id="ww-signup" data-endpoint={wattSignup.endpoint} data-fallback={wattSignup.fallbackEmail} novalidate>
             <div class="wf-field">
               <label for="ww-first">First name</label>
               <input type="text" id="ww-first" name="firstName" autocomplete="given-name" maxlength="80" required />
@@ -69,7 +72,7 @@ import { wattSignup } from '../../data/site';
 
           <div class="wf-done" id="ww-done" tabindex="-1" hidden>
             <h2>You're signed up.</h2>
-            <p>See you on Sunday, November 8, 2026 at 1:00 PM in the Social Room at Quinlan Community Center, 10185 N. Stelling Rd, Cupertino. Bring a laptop and a pencil.</p>
+            <p id="ww-done-text">{w ? `See you on ${wattDate(w.date)}, ${w.time}, in the ${w.room} at ${w.venue}, ${w.address}. Bring: ${w.bring}.` : 'We will email you when the next workshop date is set.'}</p>
             <p><a href="/watt-workshops">← Back to Watt Workshops</a></p>
           </div>
         </div>
@@ -78,8 +81,19 @@ import { wattSignup } from '../../data/site';
   </div>
 </Base>
 <script>
+  import { nextWattSession, wattDate, wattSessionLabel } from '../../data/site';
   const form = document.getElementById('ww-signup') as HTMLFormElement | null;
   if (form) {
+    // Re-pick the next session using today's date, so the page stays right between site builds.
+    const w = nextWattSession();
+    const set = (id: string, text: string) => { const el = document.getElementById(id); if (el) el.textContent = text; };
+    set('ww-pill', w ? `Watt Workshops #${w.number}` : 'Watt Workshops');
+    set('ww-when', w ? wattDate(w.date) : 'date coming soon');
+    set('ww-lede', w ? `${w.title} · ${w.time} · ${w.venue}, ${w.address.split(', ').pop()} · Grades ${w.grades} · ${w.cost}` : 'Sign up and we will email you when the next date is set.');
+    set('ww-done-text', w ? `See you on ${wattDate(w.date)}, ${w.time}, in the ${w.room} at ${w.venue}, ${w.address}. Bring: ${w.bring}.` : 'We will email you when the next workshop date is set.');
+    const badge = document.getElementById('ww-badge');
+    if (badge) { badge.textContent = w?.badge ?? ''; badge.hidden = !w?.badge; }
+
     const classField = document.getElementById('ww-class-field')!;
     const classSelect = document.getElementById('ww-class') as HTMLSelectElement;
     const errorBox = document.getElementById('ww-error')!;
@@ -111,13 +125,16 @@ import { wattSignup } from '../../data/site';
         return;
       }
       const data = Object.fromEntries(new FormData(form).entries()) as Record<string, string>;
-      data.workshop = form.dataset.workshop ?? '';
+      data.workshop = wattSessionLabel(w);
+      data.workshopDate = w ? wattDate(w.date, 'short') : '';
+      data.page = window.location.href;
       const endpoint = form.dataset.endpoint;
 
       if (!endpoint) {
         // No Google Sheet connected yet: open a pre-filled email instead.
         const body = [
           `Workshop: ${data.workshop}`,
+          `Workshop date: ${data.workshopDate || '-'}`,
           `First name: ${data.firstName}`,
           `Last name: ${data.lastName}`,
           `Grade: ${data.grade}`,

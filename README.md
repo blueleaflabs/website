@@ -154,16 +154,25 @@ The homepage's multi-pillar grid returns automatically once two or more sections
 - The two listing lines (nav flyout, homepage, `/workshops`) come from `wattPrograms` in
   `src/data/site.ts`. Shared styles are in `src/styles/watt.css`.
 - Form options (grades, Math Olympiads class times) are in `wattSignup` in `src/data/site.ts`.
+- **Adding a workshop:** add an entry to `wattSessions` in `src/data/site.ts` (slug, date, time,
+  title, subtitle, venue, steps, outcomes, schedule). That one entry creates its page at
+  `/watt-workshops/<slug>`, adds it to "All workshops" on `/watt-workshops`, and makes it the
+  featured workshop and the signup form's target once the previous date has passed.
+- **Status:** a workshop is "Enrolling" until its date passes, then "Complete". The flip happens
+  on the next site build (any push), and completed workshops stay listed as history.
+- The optional `badge` line (e.g. 'Filling fast') shows beside the signup title; delete it to hide it.
 
 **Connect the form to a Google Sheet (one time):**
-1. Create a Google Sheet (e.g. "Watt Workshops signups").
+0. Use a browser window signed in to **only one** Google account (an Incognito window works).
+   With several accounts signed in, Apps Script fails with "Sorry, unable to open the file at this time."
+1. Create a Google Sheet named "Watt Workshops Signups".
 2. In the sheet: **Extensions -> Apps Script**. Replace the editor contents with
    `integrations/watt-signup.gs` and save.
 3. **Deploy -> New deployment -> Web app**. Execute as: **Me**. Who has access: **Anyone**.
    Authorize when prompted, then copy the web app URL (ends in `/exec`).
 4. Paste that URL into `wattSignup.endpoint` in `src/data/site.ts`, commit, and push.
 
-Each signup then lands as a row in the sheet's "Signups" tab. Until `endpoint` is set, the form
+Each signup then lands as a row in the sheet's "Watt Workshops Signups" tab. Until `endpoint` is set, the form
 opens a pre-filled email to `wattSignup.fallbackEmail` instead. If you later edit the script,
 use **Deploy -> Manage deployments -> Edit -> New version** so the URL stays the same.
 

@@ -52,8 +52,7 @@ export const wattPrograms = [
     name: 'Watt Workshops - 2026-2027',
     href: '/watt-workshops',
     status: 'Enrolling',
-    summary:
-      'Single-afternoon workshops on local water, wattage, and waste issues in Santa Clara Valley. Next: Santa Clara County Water, Sunday, November 8, 2026.',
+    summary: 'Single-afternoon workshops on local water, wattage, and waste issues in Santa Clara Valley.',
   },
   {
     name: 'Watt Workshops Summer Camp',
@@ -71,6 +70,95 @@ export const wattSeries: Record<string, { label: string; href: string }> = {
 };
 
 // ------------------------------------------------------------
+// Watt Workshops sessions (2026-2027). THE place to add a workshop.
+// Each entry gets its own page at /watt-workshops/<slug> and a
+// row in the "All workshops" history on /watt-workshops. The series
+// page and the signup form feature the next session whose date has
+// not passed; once a date passes, that workshop's status turns from
+// Enrolling to Complete on the next site build and it stays listed
+// as history. Rolling to a new workshop = adding one entry here.
+//   slug:  URL name, lowercase-with-dashes ('register' is taken)
+//   date:  YYYY-MM-DD (Pacific time)
+//   badge: optional short note shown beside the signup title,
+//          e.g. 'Filling fast'. Delete the line to hide it.
+// ------------------------------------------------------------
+export const wattSessions = [
+  {
+    number: 1,
+    slug: 'santa-clara-county-water',
+    date: '2026-11-08',
+    time: '1:00 to 3:00 PM',
+    title: 'Santa Clara County Water: A Science Fair Approach',
+    subtitle: 'Water Sources, Quality and Conservation Challenges',
+    topic: 'Water Sources',
+    venue: 'Quinlan Community Center',
+    room: 'Social Room',
+    address: '10185 N. Stelling Rd, Cupertino',
+    grades: '7-10',
+    bring: 'Laptop and a pencil',
+    cost: 'FREE',
+    badge: 'Filling fast',
+    // "Why come" block
+    headline: 'Leave with a framework for building successful science fair projects.',
+    steps: [
+      { t: 'Start with a real local problem', d: "Santa Clara County's water is the working example." },
+      { t: 'Go to primary sources', d: 'Work from published data and reports, not summaries of them.' },
+      { t: 'Find the question you can measure', d: 'Turn a broad topic into something you can test.' },
+      { t: 'Weigh the trade-offs, then pitch', d: 'Present your idea clearly and defend your choices.' },
+    ],
+    // "In two hours you will" block
+    outcomes: [
+      "Learn where Santa Clara County's water comes from",
+      "Look at the county's water quality and conservation challenges",
+      'Practice turning a local problem into a science fair project idea',
+    ],
+    // Run of show: [activity, minutes]
+    schedule: [
+      ['Intro and Icebreakers', 10],
+      ['Lecture', 30],
+      ['Trace Your Water Activity', 20],
+      ['Snack break', 5],
+      ['Research', 30],
+      ['Present', 15],
+      ['Close-out', 10],
+    ] as [string, number][],
+  },
+];
+
+export const wattTeacher = {
+  name: 'Rohan Agarwal',
+  points: [
+    '4x Science Fair Award Winner - Synopsys, MTFC, Genius Olympiad',
+    'Junior at Monta Vista High School',
+    'Founder of Blue Leaf Labs',
+  ],
+};
+export type WattSession = (typeof wattSessions)[number];
+
+const todayPacific = () => new Date().toLocaleDateString('en-CA', { timeZone: 'America/Los_Angeles' });
+
+// 'Enrolling' until the workshop's date has passed, then 'Complete'.
+export const wattStatus = (w: WattSession, today: string = todayPacific()) =>
+  w.date >= today ? 'Enrolling' : 'Complete';
+
+// The next session that has not happened yet (today still counts), or undefined.
+export const nextWattSession = (today: string = todayPacific()): WattSession | undefined =>
+  [...wattSessions].sort((a, b) => a.date.localeCompare(b.date)).find((w) => w.date >= today);
+
+// '2026-11-08' -> 'Sunday, November 8, 2026' (long) or 'Nov 8, 2026' (short)
+export const wattDate = (iso: string, style: 'long' | 'short' = 'long') =>
+  new Date(iso + 'T12:00:00Z').toLocaleDateString(
+    'en-US',
+    style === 'long'
+      ? { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric', timeZone: 'UTC' }
+      : { month: 'short', day: 'numeric', year: 'numeric', timeZone: 'UTC' },
+  );
+
+// What gets recorded in the response sheet's "Workshop" column.
+export const wattSessionLabel = (w?: WattSession) =>
+  w ? `Watt Workshops #${w.number}: ${w.title}` : 'Next workshop (date not yet announced)';
+
+// ------------------------------------------------------------
 // Watt Workshops signup form (/watt-workshops/register).
 // `endpoint` is the Google Apps Script web-app URL that appends
 // each signup to the Google Sheet (see integrations/watt-signup.gs
@@ -78,9 +166,8 @@ export const wattSeries: Record<string, { label: string; href: string }> = {
 // to opening a pre-filled email to `fallbackEmail`.
 // ------------------------------------------------------------
 export const wattSignup = {
-  endpoint: '',
+  endpoint: 'https://script.google.com/macros/s/AKfycbxil9DCGVOL8f_5ZcJ6qizzFEsrk6mJClTsWV_7cUFcag4LpyUHsGx31QkinNDZNBX-sA/exec',
   fallbackEmail: 'rohan.agarwal@blueleaflabs.org',
-  workshop: 'Watt Workshops #1: Santa Clara County Water (Nov 8, 2026)',
   grades: ['7', '8', '9', '10'],
   olympiadsClasses: [
     'Monday 6:30 pm',

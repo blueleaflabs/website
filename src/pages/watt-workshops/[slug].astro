@@ -1,0 +1,34 @@
+---
+// One page per workshop in the 2026-2027 series: /watt-workshops/<slug>.
+// Pages are generated from wattSessions in src/data/site.ts.
+import '../../styles/watt.css';
+import Base from '../../layouts/Base.astro';
+import WattSession from '../../components/WattSession.astro';
+import WattWhyJoin from '../../components/WattWhyJoin.astro';
+import { wattSessions, wattDate, wattStatus, type WattSession as Session } from '../../data/site';
+export function getStaticPaths() {
+  return wattSessions.map((session) => ({ params: { slug: session.slug }, props: { session } }));
+}
+const { session: w } = Astro.props as { session: Session };
+const status = wattStatus(w);
+---
+<Base title={`${w.title} | Watt Workshops | Blue Leaf Labs`} description={`Watt Workshops #${w.number}: ${w.title}. ${w.subtitle}. ${wattDate(w.date)}, ${w.time} at ${w.venue}.`}>
+  <div class="wf">
+    <div class="wf-hero">
+      <div class="wrap">
+        <div class="wf-hero-top">
+          <a class="wf-label wf-back" href="/watt-workshops">← Watt Workshops 2026-2027</a>
+          <span class="wf-pill">Watt Workshops #{w.number} · {status}</span>
+        </div>
+        <h1>{w.title}</h1>
+        <p class="wf-lede">{w.subtitle}</p>
+        <div class="wf-rule" aria-hidden="true"></div>
+      </div>
+    </div>
+
+    <WattSession session={w} lead={status === 'Enrolling' ? 'Enrolling now' : 'Past workshop'}>
+      <WattWhyJoin />
+      <p class="wf-past" slot="after"><a href="/watt-workshops">← All workshops in the 2026-2027 series</a></p>
+    </WattSession>
+  </div>
+</Base>

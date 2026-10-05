@@ -2,13 +2,13 @@
  * Watt Workshops signup -> Google Sheet.
  *
  * Receives the form on blueleaflabs.org/watt-workshops/register and appends
- * one row per signup to the "Signups" tab of the spreadsheet this script is
+ * one row per signup to the "Watt Workshops Signups" tab of the spreadsheet this script is
  * bound to. Setup steps are in README.md, section 8.
  */
-const SHEET_NAME = 'Signups';
+const SHEET_NAME = 'Watt Workshops Signups';
 const HEADERS = [
-  'Timestamp', 'Workshop', 'First name', 'Last name', 'Grade', 'Email address',
-  'Current Math Olympiads student', 'Math Olympiads class', 'Primary area of interest',
+  'Signed up at', 'Workshop', 'Workshop date', 'First name', 'Last name', 'Grade', 'Email address',
+  'Current Math Olympiads student', 'Math Olympiads class', 'Primary area of interest', 'Submitted from',
 ];
 
 function doPost(e) {
@@ -27,8 +27,9 @@ function doPost(e) {
       sheet.setFrozenRows(1);
     }
     sheet.appendRow([
-      new Date(), clean_(d.workshop), clean_(d.firstName), clean_(d.lastName), clean_(d.grade),
-      clean_(d.email), clean_(d.olympiads), clean_(d.olympiadsClass), clean_(d.interest),
+      new Date(), clean_(d.workshop), clean_(d.workshopDate), clean_(d.firstName), clean_(d.lastName),
+      clean_(d.grade), clean_(d.email), clean_(d.olympiads), clean_(d.olympiadsClass), clean_(d.interest),
+      clean_(d.page),
     ]);
     return json_({ ok: true });
   } catch (err) {
