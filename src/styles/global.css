@@ -257,6 +257,21 @@ section{padding:clamp(3.25rem,6.5vw,5rem) 0}
 .proj-single .awards-stack{display:grid;grid-template-columns:1fr;gap:.7rem}
 @media (min-width:680px){.proj-single .awards-stack{grid-template-columns:1fr 1fr}}
 .proj-single .proj-prose{max-width:70ch}
+.proj-wide .awards-stack{display:grid;grid-template-columns:1fr;gap:.7rem}
+@media (min-width:680px){.proj-wide .awards-stack{grid-template-columns:1fr 1fr}}
+@media (min-width:1000px){.proj-wide .awards-stack{grid-template-columns:1fr 1fr 1fr}}
+.proj-wide .proj-prose{max-width:none}
+.media-row{display:grid;grid-template-columns:1fr;gap:1.2rem;margin-top:1.8rem}
+@media (min-width:760px){.media-row{grid-template-columns:1fr 1fr}}
+.media-row .video-embed{margin:0}
+.tool-cta{display:flex;gap:1rem;align-items:center;background:var(--accent);border:1.5px solid var(--accent);border-radius:9px;padding:1rem 1.3rem;margin:0 0 1rem;text-decoration:none;color:#fff;box-shadow:0 12px 28px -18px rgba(10,40,34,.6);transition:background .15s,border-color .15s}
+.tool-cta:hover{background:var(--accent-deep);border-color:var(--accent-deep)}
+.tool-ic{width:46px;height:46px;border-radius:9px;background:rgba(255,255,255,.14);display:flex;align-items:center;justify-content:center;flex:none;color:#fff}
+.tool-ic svg{width:24px;height:24px}
+.tool-txt{display:flex;flex-direction:column}
+.tool-lbl{font-family:'IBM Plex Mono',monospace;font-size:.67rem;font-weight:500;letter-spacing:.11em;text-transform:uppercase;opacity:.85;margin-bottom:.25rem}
+.tool-title{font-size:clamp(1.05rem,3.2vw,1.3rem);font-weight:600;line-height:1.2;color:#fff}
+.tool-note{font-size:.9rem;opacity:.85;margin-top:.25rem}
 .glance-bar{background:var(--paper-raised);border:1px solid var(--rule);border-radius:8px;overflow:hidden;margin-top:2.25rem;box-shadow:0 14px 34px -22px rgba(10,40,34,.4)}
 .gb-head{background:color-mix(in srgb,var(--accent) 8%,var(--paper-raised));color:var(--accent-deep);border-bottom:1px solid color-mix(in srgb,var(--accent) 25%,var(--line));font-family:'IBM Plex Mono',monospace;font-size:.72rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;padding:.85rem 1.4rem}
 .gb-code{display:flex;align-items:baseline;gap:.75rem;padding:.8rem 1.4rem;border-bottom:1px solid var(--line);flex-wrap:wrap}

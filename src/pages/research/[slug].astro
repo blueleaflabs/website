@@ -18,7 +18,7 @@ const pubs = (d.publications && d.publications.length)
   ? d.publications
   : (d.publicationUrl ? [{ url: d.publicationUrl, label: 'Published preprint' }] : []);
 const shortenUrl = (u) => { const s = u.replace(/^https?:\/\//, ''); return s.startsWith('doi.org/') ? s : s.split('/')[0]; };
-const toBullets = (str) => str.split(';').map((x) => x.trim().replace(/\.$/, '')).filter(Boolean);
+const toBullets = (str) => str.split(';').map((x) => x.trim().replace(/\.$/, '')).filter(Boolean).map((x) => x.charAt(0).toUpperCase() + x.slice(1));
 
 const gallery = d.gallery ?? [];
 const galUrl = (src) => (/^(https?:)?\//.test(src) ? src : `/images/uploads/${src}`);
@@ -29,7 +29,8 @@ const hasPhotos = gallery.length > 0;
 const hasVideos = videos.length > 0;
 const hasMedia = hasVideos || hasPhotos;
 const hasGlance = d.methods || d.dataSources || d.outputs || repoShort;
-const hasTopBlock = pubs.length > 0 || (d.highlights && d.highlights.length > 0) || hasAwards || hasMedia;
+const hasTopBlock = !!d.tool || pubs.length > 0 || (d.highlights && d.highlights.length > 0) || hasAwards || hasMedia;
+const wide = d.layout === 'wide';
 
 const updates = (await getCollection('updates'))
   .filter((u) => u.data.published && u.data.project === entry.id)
@@ -65,6 +66,13 @@ const iconFor = (a) => ICONS[a.kind ?? 'award'] ?? TROPHY;
       {d.question && <p class="detail-summary">{d.question}</p>}
     </header>
 
+    {d.tool && (
+      <a class="tool-cta" href={d.tool.url}>
+        <span class="tool-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="14" rx="2"/><path d="M7 20h10M8 12h2l2-4 2 7 2-3h2"/></svg></span>
+        <span class="tool-txt"><span class="tool-lbl">Interactive tool</span><span class="tool-title">{d.tool.label} →</span>{d.tool.note && <span class="tool-note">{d.tool.note}</span>}</span>
+      </a>
+    )}
+
     {pubs.length > 0 && (
       <div class="pub">
         <span class="pub-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M16 13H8M16 17H8M10 9H8"/></svg></span>
@@ -89,7 +97,38 @@ const iconFor = (a) => ICONS[a.kind ?? 'award'] ?? TROPHY;
       </div>
     )}
 
-    {hasMedia ? (
+    {hasMedia && wide ? (
+      <div class="proj-wide">
+        {hasAwards && (
+          <div class="awards-stack">
+            {awards.map((a) => (
+              <div class="award">
+                <span class="tro" set:html={iconFor(a)}></span>
+                <div>
+                  <div class="a-title">{a.title}</div>
+                  {(a.venue || a.year) && <div class="a-meta">{[a.venue, a.year].filter(Boolean).join(' · ')}</div>}
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
+        <div class="prose proj-prose"><Content components={{ Figure, YouTube }} /></div>
+        <div class="media-row">
+          {hasVideos && videos.map((v) => (
+            <div class="vh-item">
+              {v.label && <div class="vh-label">{v.label}</div>}
+              <YouTube url={v.url} title={v.label ?? d.title} />
+            </div>
+          ))}
+          {hasPhotos && gallery.map((g) => (
+            <figure>
+              <img src={galUrl(g.src)} alt={g.alt ?? g.caption ?? ''} loading="lazy" />
+              {g.caption && <figcaption>{g.caption}</figcaption>}
+            </figure>
+          ))}
+        </div>
+      </div>
+    ) : hasMedia ? (
       <div class="proj-body">
         <div class="pb-left">
           {hasAwards && (

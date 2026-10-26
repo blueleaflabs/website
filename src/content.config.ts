@@ -20,6 +20,8 @@ const research = defineCollection({
     videos: z.array(z.object({ label: z.string().optional(), url: z.string().url() })).optional(),
     awards: z.array(z.object({ title: z.string(), venue: z.string().optional(), year: z.union([z.string(), z.number()]).optional(), kind: z.enum(['award', 'paper', 'talk', 'grant']).default('award') })).optional(),
     highlights: z.array(z.string()).optional(),
+    tool: z.object({ label: z.string(), url: z.string(), note: z.string().optional() }).optional(),
+    layout: z.enum(['columns', 'wide']).default('columns'),
     imagePrefix: z.string().optional(),
     heroAlt: z.string().optional(),
     order: z.number().default(50),

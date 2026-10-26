@@ -9,6 +9,11 @@ methods: "One-dimensional axial RED stack model (NaCl-equivalent transport, wate
 dataSources: "Manufacturer membrane data (Fumatech FAS/FKS); transport measurements from the RED literature (Veerman, Kingsbury); Hulme et al. 2021 stack measurements and public workbook; Carlsbad Desalination Plant supplier and permit records; standard seawater composition."
 outputs: "Peer-review manuscript (submitted); SSRN preprint; reproducible simulation pipeline and analysis notebooks (GitHub); deposited run data and figures (Zenodo); interactive design screener; Carlsbad-informed module case."
 repo: "https://github.com/blueleaflabs/osmoflux"
+tool:
+  label: "Open the RED Design Screener"
+  url: "/tools/osmoflux-screener.html"
+  note: "Set outlet limits, dilute supply, membrane budget and retained power — see what each design lever buys."
+layout: wide
 highlights:
   - "4,353 stack designs screened; 90 % of peak power moves 21.5 % more salt"
   - "Same outlet duty with 23 cell pairs instead of 36–37"
@@ -65,15 +70,9 @@ published: true
 
 Reverse electrodialysis (RED) moves salt from desalination concentrate into a dilute stream and generates electricity while doing it. OsmoFlux asks the design question a plant engineer would ask: given separate outlet limits on both streams, how much membrane, how much dilute water, and which electrical load? The answer is a design sequence, and a screening tool built on it.
 
-<p><a class="btn btn-primary" href="/tools/osmoflux-screener.html">Open the RED Design Screener →</a></p>
-
-- **What the model found:** the electrical load that maximizes power does not minimize concentrate salinity. Across 4,353 stack designs, operating at 90 % of peak power raises salt transfer by a median 21.5 % but lowers concentrate salinity by only 1.20 g/L, because water transport offsets most of the extra salt at the outlet.
-- **Where treatment comes from:** adding membrane or dilute water outranks rearranging the same resources into stages, whose pumping losses exceed their gain — the order holds in all 30 matched comparisons.
+- **What the model found:** the load that maximizes power and the load that minimizes concentrate salinity are different. Across 4,353 stack designs, operating at 90 % of peak power raises salt transfer by a median 21.5 % while lowering concentrate salinity by 1.20 g/L, because water leaves the concentrate along with the salt and offsets much of the salinity gain.
+- **Where treatment comes from:** adding membrane or dilute water outranks rearranging the same resources into stages.
 - **What it changes:** selecting hardware and load together meets the same outlet duty with 23 cell pairs instead of 36–37, and lowers the avoided-treatment value needed to justify the stack by 34 %, even when the stack imports electricity.
-- **A real feed:** a module case built from the Carlsbad Desalination Plant's published feed and permit data shows the same hardware saving (29–33 %) and a second regime: when dilute water is scarce, the dilute outlet binds and the preferred load adjustment reverses.
+- **A real feed:** a module case built from the Carlsbad Desalination Plant's published feed and permit data shows the same hardware saving (29–33 %). When dilute water is scarce, the dilute outlet becomes the binding condition and the preferred load adjustment reverses.
 
-**The screener** turns the framework into a tool. Set the two outlet limits, the dilute-supply ratio, the membrane budget and the retained-power rule; it checks water feasibility from conservation, looks up the design in the survey, reports the fewest pairs that meet both limits, and ranks the four levers — power, water, membrane, rearrangement — by what each buys next. Every number it shows is read from the deposited run.
-
-**How it is built.** The simulation pipeline is written in Python (`physics.py`, `experiment.py`, `economics.py`, with NumPy, SciPy and pandas) and launched from a reproducibility notebook that records every input hash; an analysis notebook regenerates all figures and tables from the saved run. The screener is a single self-contained HTML page (Chart.js) whose data layer is extracted from that run; its front-end code was written with AI assistance and is disclosed as such. Code is public at github.com/blueleaflabs/osmoflux; data and figures are deposited on Zenodo.
-
-These are model predictions, not plant validation: the transport model is NaCl-equivalent, and published-stack comparisons bound absolute power rather than calibrate it. The next step is a physical test of the predicted hardware reduction and control choices.
+OsmoFlux offers desalination plants a screener to explore optimal design configurations. A plant would set the two outlet limits, the dilute-supply ratio, the membrane budget and the retained-power rule. OsmoFlux checks water feasibility from conservation, looks up the design in the survey, reports the fewest pairs that meet both limits, and ranks the four levers - power, water, membrane, rearrangement - by the benefit provided.
