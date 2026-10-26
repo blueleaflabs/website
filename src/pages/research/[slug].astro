@@ -31,6 +31,9 @@ const hasMedia = hasVideos || hasPhotos;
 const hasGlance = d.methods || d.dataSources || d.outputs || repoShort;
 const hasTopBlock = !!d.tool || pubs.length > 0 || (d.highlights && d.highlights.length > 0) || hasAwards || hasMedia;
 const wide = d.layout === 'wide';
+const leadVideo = wide && hasVideos ? videos[0] : null;
+const restVideos = leadVideo ? videos.slice(1) : videos;
+const isPortrait = (u) => /shorts\//.test(u);
 
 const updates = (await getCollection('updates'))
   .filter((u) => u.data.published && u.data.project === entry.id)
@@ -50,7 +53,9 @@ const ICONS = {
   paper: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M16 13H8M16 17H8M10 9H8"/></svg>`,
   talk: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="12" rx="2"/><path d="M8 20h8M12 16v4M7 12l3-3 2 2 4-4"/></svg>`,
   grant: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22V12M12 12c0-4 3-7 8-7-0 4-3 7-8 7zM12 15c0-3-2.5-5-6-5 0 3 2.5 5 6 5z"/></svg>`,
+  code: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 3v6M12 15v6"/></svg>`,
 };
+const splitDate = (y) => { const t = String(y ?? '').trim(); const m = t.match(/^([A-Za-z]{3,})\s+(\d{4})$/); return m ? { month: m[1], year: m[2] } : { month: '', year: t }; };
 const iconFor = (a) => ICONS[a.kind ?? 'award'] ?? TROPHY;
 ---
 <Base title={`${d.title} | Blue Leaf Labs`} description={d.summary}>
@@ -66,40 +71,96 @@ const iconFor = (a) => ICONS[a.kind ?? 'award'] ?? TROPHY;
       {d.question && <p class="detail-summary">{d.question}</p>}
     </header>
 
-    {d.tool && (
-      <a class="tool-cta" href={d.tool.url}>
-        <span class="tool-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="14" rx="2"/><path d="M7 20h10M8 12h2l2-4 2 7 2-3h2"/></svg></span>
-        <span class="tool-txt"><span class="tool-lbl">Interactive tool</span><span class="tool-title">{d.tool.label} →</span>{d.tool.note && <span class="tool-note">{d.tool.note}</span>}</span>
-      </a>
-    )}
+    {wide && leadVideo ? (
+      <div class="top-split">
+        <div class="ts-left">
+        {d.tool && (
+          <a class="tool-cta" href={d.tool.url}>
+            <span class="tool-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="14" rx="2"/><path d="M7 20h10M8 12h2l2-4 2 7 2-3h2"/></svg></span>
+            <span class="tool-txt"><span class="tool-lbl">Interactive tool</span><span class="tool-title">{d.tool.label} →</span>{d.tool.note && <span class="tool-note">{d.tool.note}</span>}</span>
+          </a>
+        )}
 
-    {pubs.length > 0 && (
-      <div class="pub">
-        <span class="pub-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M16 13H8M16 17H8M10 9H8"/></svg></span>
-        <div class="pub-txt">
-          <span class="pub-lbl">{pubs.length > 1 ? 'Publications' : (pubs[0].label ?? 'Publication')}</span>
-          {pubs.length === 1 ? (
-            <a class="pub-doi" href={pubs[0].url}>{shortenUrl(pubs[0].url)} ↗</a>
-          ) : (
-            <div class="pub-list">
-              {pubs.map((p) => (<a class="pub-item" href={p.url}>{p.label ?? shortenUrl(p.url)} ↗</a>))}
+        {pubs.length > 0 && (
+          <div class="pub">
+            <span class="pub-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M16 13H8M16 17H8M10 9H8"/></svg></span>
+            <div class="pub-txt">
+              <span class="pub-lbl">{pubs.length > 1 ? 'Publications' : (pubs[0].label ?? 'Publication')}</span>
+              {pubs.length === 1 ? (
+                <a class="pub-doi" href={pubs[0].url}>{shortenUrl(pubs[0].url)} ↗</a>
+              ) : (
+                <div class="pub-list">
+                  {pubs.map((p) => (<a class="pub-item" href={p.url}>{p.label ?? shortenUrl(p.url)} ↗</a>))}
+                </div>
+              )}
             </div>
+          </div>
+        )}
+
+        {d.highlights && d.highlights.length > 0 && (
+          <div class="chips">
+            {d.highlights.map((h) => (
+              <span class="chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>{h}</span>
+            ))}
+          </div>
+        )}
+          {hasAwards && (
+            <ol class="timeline" aria-label="Project timeline">
+              {awards.map((a) => { const dt = splitDate(a.year); return (
+                <li class="tl-item">
+                  <div class="tl-date"><span class="tl-month">{dt.month || '\u00a0'}</span><span class="tl-year">{dt.year}</span></div>
+                  <div class="tl-rail"><span class="tl-dot" set:html={iconFor(a)}></span></div>
+                  <div class="tl-body">
+                    <div class="a-title">{a.title}</div>
+                    {a.venue && <div class="a-meta">{a.venue}</div>}
+                  </div>
+                </li>
+              ); })}
+            </ol>
           )}
         </div>
+        <div class={`ts-right${isPortrait(leadVideo.url) ? ' portrait' : ''}`}>
+          <YouTube url={leadVideo.url} title={leadVideo.label ?? d.title} />
+        </div>
       </div>
-    )}
+    ) : (
+      <>
+        {d.tool && (
+          <a class="tool-cta" href={d.tool.url}>
+            <span class="tool-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="14" rx="2"/><path d="M7 20h10M8 12h2l2-4 2 7 2-3h2"/></svg></span>
+            <span class="tool-txt"><span class="tool-lbl">Interactive tool</span><span class="tool-title">{d.tool.label} →</span>{d.tool.note && <span class="tool-note">{d.tool.note}</span>}</span>
+          </a>
+        )}
 
-    {d.highlights && d.highlights.length > 0 && (
-      <div class="chips">
-        {d.highlights.map((h) => (
-          <span class="chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>{h}</span>
-        ))}
-      </div>
+        {pubs.length > 0 && (
+          <div class="pub">
+            <span class="pub-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M16 13H8M16 17H8M10 9H8"/></svg></span>
+            <div class="pub-txt">
+              <span class="pub-lbl">{pubs.length > 1 ? 'Publications' : (pubs[0].label ?? 'Publication')}</span>
+              {pubs.length === 1 ? (
+                <a class="pub-doi" href={pubs[0].url}>{shortenUrl(pubs[0].url)} ↗</a>
+              ) : (
+                <div class="pub-list">
+                  {pubs.map((p) => (<a class="pub-item" href={p.url}>{p.label ?? shortenUrl(p.url)} ↗</a>))}
+                </div>
+              )}
+            </div>
+          </div>
+        )}
+
+        {d.highlights && d.highlights.length > 0 && (
+          <div class="chips">
+            {d.highlights.map((h) => (
+              <span class="chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>{h}</span>
+            ))}
+          </div>
+        )}
+      </>
     )}
 
     {hasMedia && wide ? (
       <div class="proj-wide">
-        {hasAwards && (
+        {hasAwards && !leadVideo && (
           <div class="awards-stack">
             {awards.map((a) => (
               <div class="award">
@@ -113,8 +174,9 @@ const iconFor = (a) => ICONS[a.kind ?? 'award'] ?? TROPHY;
           </div>
         )}
         <div class="prose proj-prose"><Content components={{ Figure, YouTube }} /></div>
+        {(restVideos.length > 0 || hasPhotos) && (
         <div class="media-row">
-          {hasVideos && videos.map((v) => (
+          {restVideos.map((v) => (
             <div class="vh-item">
               {v.label && <div class="vh-label">{v.label}</div>}
               <YouTube url={v.url} title={v.label ?? d.title} />
@@ -127,6 +189,7 @@ const iconFor = (a) => ICONS[a.kind ?? 'award'] ?? TROPHY;
             </figure>
           ))}
         </div>
+        )}
       </div>
     ) : hasMedia ? (
       <div class="proj-body">

@@ -65,6 +65,10 @@ awards:
     venue: "Monta Vista IRPD"
     year: "2026"
     kind: grant
+  - title: "First code commit"
+    venue: "github.com/blueleaflabs/osmoflux"
+    year: "Jan 2026"
+    kind: code
 published: true
 ---
 

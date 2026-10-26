@@ -18,7 +18,7 @@ const research = defineCollection({
     publications: z.array(z.object({ label: z.string().optional(), url: z.string().url() })).optional(),
     gallery: z.array(z.object({ src: z.string(), alt: z.string().optional(), caption: z.string().optional() })).optional(),
     videos: z.array(z.object({ label: z.string().optional(), url: z.string().url() })).optional(),
-    awards: z.array(z.object({ title: z.string(), venue: z.string().optional(), year: z.union([z.string(), z.number()]).optional(), kind: z.enum(['award', 'paper', 'talk', 'grant']).default('award') })).optional(),
+    awards: z.array(z.object({ title: z.string(), venue: z.string().optional(), year: z.union([z.string(), z.number()]).optional(), kind: z.enum(['award', 'paper', 'talk', 'grant', 'code']).default('award') })).optional(),
     highlights: z.array(z.string()).optional(),
     tool: z.object({ label: z.string(), url: z.string(), note: z.string().optional() }).optional(),
     layout: z.enum(['columns', 'wide']).default('columns'),

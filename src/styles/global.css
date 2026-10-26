@@ -261,6 +261,27 @@ section{padding:clamp(3.25rem,6.5vw,5rem) 0}
 @media (min-width:680px){.proj-wide .awards-stack{grid-template-columns:1fr 1fr}}
 @media (min-width:1000px){.proj-wide .awards-stack{grid-template-columns:1fr 1fr 1fr}}
 .proj-wide .proj-prose{max-width:none}
+.top-split{display:grid;grid-template-columns:1fr;gap:1.6rem;margin-bottom:1.6rem}
+@media (min-width:900px){.top-split{grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);gap:2.2rem;align-items:start}}
+.ts-left .pub,.ts-left .tool-cta{margin-bottom:1rem}
+.ts-left .awards-stack{margin-bottom:0}
+.ts-right .video-embed{margin:0}
+.ts-right.portrait .video-embed{aspect-ratio:9/16;max-width:360px;margin:0 auto}
+@media (min-width:900px){.ts-right.portrait .video-embed{margin:0 0 0 auto}}
+.timeline{list-style:none;margin:.4rem 0 0;padding:0}
+.tl-item{display:grid;grid-template-columns:72px 34px minmax(0,1fr);gap:0 .6rem;align-items:start;position:relative}
+.tl-date{text-align:right;padding-top:.45rem;font-family:'IBM Plex Mono',monospace;line-height:1.1}
+.tl-month{display:block;font-size:1.05rem;font-weight:600;color:var(--accent-deep);letter-spacing:.01em}
+.tl-year{display:block;font-size:.72rem;color:var(--ink-2);margin-top:.15rem;letter-spacing:.08em}
+.tl-rail{position:relative;display:flex;justify-content:center;align-self:stretch}
+.tl-rail::before{content:"";position:absolute;top:0;bottom:0;left:50%;width:2px;background:color-mix(in srgb,var(--accent) 28%,var(--line));transform:translateX(-50%)}
+.tl-item:first-child .tl-rail::before{top:1.1rem}
+.tl-item:last-child .tl-rail::before{bottom:auto;height:1.1rem}
+.tl-dot{position:relative;z-index:1;width:34px;height:34px;border-radius:50%;background:var(--paper-raised);border:2px solid var(--accent);color:var(--accent-deep);display:flex;align-items:center;justify-content:center;margin-top:.3rem}
+.tl-dot svg{width:16px;height:16px}
+.tl-body{padding:.45rem 0 1.35rem}
+.tl-body .a-title{font-size:1.02rem}
+.tl-item:last-child .tl-body{padding-bottom:.3rem}
 .media-row{display:grid;grid-template-columns:1fr;gap:1.2rem;margin-top:1.8rem}
 @media (min-width:760px){.media-row{grid-template-columns:1fr 1fr}}
 .media-row .video-embed{margin:0}
