@@ -3,8 +3,8 @@ title: OsmoFlux
 kind: project
 status: Active
 order: 1
-summary: "A design framework and screening tool for sizing and operating reverse electrodialysis on desalination concentrate — treating brine and generating electricity under membrane and dilute-water constraints."
-question: "When a desalination plant must meet separate concentrate and dilute outlet limits, how much membrane, dilute water and electrical load does a reverse-electrodialysis stack need — and does the load that maximizes power also minimize concentrate salinity?"
+summary: "Cleaner desalination for global drought resilience: a design framework and screening tool for treating desalination brine with reverse electrodialysis while generating electricity."
+question: "Cleaner desalination for global drought resilience."
 methods: "One-dimensional axial RED stack model (NaCl-equivalent transport, water transport, pumping losses); conservation bounds and a local operating-point law; 4,353-design computational survey with mesh refinement to 640–2,560 segments; Morris sensitivity screening; paired techno-economic comparison over 4,000 cost draws; unfitted benchmark against published stack measurements."
 dataSources: "Manufacturer membrane data (Fumatech FAS/FKS); transport measurements from the RED literature (Veerman, Kingsbury); Hulme et al. 2021 stack measurements and public workbook; Carlsbad Desalination Plant supplier and permit records; standard seawater composition."
 outputs: "Peer-review manuscript (submitted); SSRN preprint; reproducible simulation pipeline and analysis notebooks (GitHub); deposited run data and figures (Zenodo); interactive design screener; Carlsbad-informed module case."
@@ -15,7 +15,7 @@ tool:
   note: "Set outlet limits, dilute supply, membrane budget and retained power — see what each design lever buys."
 layout: wide
 highlights:
-  - "4,353 stack designs screened; 90 % of peak power moves 21.5 % more salt"
+  - "4,353 designs screened; 90 % of peak power moves 21.5 % more salt"
   - "Same outlet duty with 23 cell pairs instead of 36–37"
   - "Carlsbad-informed case: 29–33 % less membrane"
 videos:
@@ -72,7 +72,9 @@ awards:
 published: true
 ---
 
-Reverse electrodialysis (RED) moves salt from desalination concentrate into a dilute stream and generates electricity while doing it. OsmoFlux asks the design question a plant engineer would ask: given separate outlet limits on both streams, how much membrane, how much dilute water, and which electrical load? The answer is a design sequence, and a screening tool built on it.
+Only 0.5% of Earth's water is usable freshwater, and over four billion people live in water-stressed regions. Desalination is the resilient answer: over 300 million people rely on water from 22,000 plants for their daily survival needs. Yet those plants discharge 142 million m³ of brine a day, most of it straight to the sea, enough to bury Florida a foot deep every year. At nearly twice the salinity of seawater, brine sinks and spreads across the seafloor, draining oxygen at the base of fragile coastal ecosystems, every day the plant runs. In 2022 a $1.4 billion California plant was denied its permit partly over brine.
+
+OsmoFlux offers desalination plants a new way to get an engineering answer to the brine question. Reverse electrodialysis (RED) is a membrane technology studied mainly as a way to generate electricity. OsmoFlux is a screening tool for plant engineers to evaluate RED to dilute discharge while recovering power. A plant enters its own flows, brine chemistry, and permit limits, and OsmoFlux returns the optimal RED stack design for meeting that limit, along with what it costs to build and run.
 
 - **What the model found:** the load that maximizes power and the load that minimizes concentrate salinity are different. Across 4,353 stack designs, operating at 90 % of peak power raises salt transfer by a median 21.5 % while lowering concentrate salinity by 1.20 g/L, because water leaves the concentrate along with the salt and offsets much of the salinity gain.
 - **Where treatment comes from:** adding membrane or dilute water outranks rearranging the same resources into stages.
