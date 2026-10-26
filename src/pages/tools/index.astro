@@ -1,0 +1,23 @@
+---
+import Base from '../../layouts/Base.astro';
+import { tools } from '../../data/site';
+---
+<Base title="Tools | Blue Leaf Labs" description="Interactive tools built from Blue Leaf Labs research, open to anyone.">
+  <div class="wrap page-intro">
+    <h1>Tools</h1>
+    <p>Interactive tools built on our research. Each one runs in the browser on the same data behind the published work.</p>
+  </div>
+  <section>
+    <div class="wrap">
+      <div class="ledger">
+        {tools.map((t) => (
+          <a class="lrow tight" href={t.href}>
+            <div class="lcell label"><span class="lname">{t.name}</span></div>
+            <div class="lcell body"><p class="ldesc" style="margin:0">{t.summary}</p></div>
+            <div class="lcell meta"><span class="post-meta">{t.project ? t.project.label : ''}</span></div>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+</Base>

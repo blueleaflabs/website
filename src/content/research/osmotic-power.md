@@ -29,7 +29,7 @@ publications:
   - label: "Simulation data and reproducible analysis (Zenodo)"
     url: "https://doi.org/10.5281/zenodo.23353868"
 awards:
-  - title: "Presented to the FUHSD District Board and the Climate Collective"
+  - title: "Presented to the FUHSD Board and Climate Collective"
     venue: "Fremont Union High School District"
     year: "Oct 2026"
     kind: talk
@@ -51,19 +51,19 @@ awards:
     kind: award
   - title: "2nd Place, National ($15,000 scholarship)"
     venue: "Modeling the Future Challenge"
-    year: "2026"
+    year: "Apr 2026"
     kind: award
   - title: "National Finalist, Climate Resilience Award"
     venue: "Modeling the Future Challenge"
-    year: "2026"
+    year: "Apr 2026"
     kind: award
   - title: "Second Award"
     venue: "Synopsys Science Fair"
-    year: "2026"
+    year: "Mar 2026"
     kind: award
   - title: "Research Grant"
     venue: "Monta Vista IRPD"
-    year: "2026"
+    year: "Feb 2026"
     kind: grant
   - title: "First code commit"
     venue: "github.com/blueleaflabs/osmoflux"

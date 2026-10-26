@@ -34,6 +34,7 @@ export const sections = [
   { label: 'Workshops', path: '/workshops', live: true  },
   { label: 'Talks',     path: '/talks',     live: false },
   { label: 'Writing',   path: '/writing',   live: true  },
+  { label: 'Tools',     path: '/tools',     live: true  },
   { label: 'About',     path: '/about',     live: true  },
 ];
 
@@ -43,6 +44,20 @@ export const LIVE_SECTIONS = sections.filter((s) => s.live);
 export const nav = LIVE_SECTIONS;
 
 // ------------------------------------------------------------
+// Interactive tools. Single source for the nav flyout and the /tools
+// index. Add a tool here and it appears in both. `href` may point at a
+// static page under public/ (e.g. public/tools/*.html).
+// ------------------------------------------------------------
+export const tools = [
+  {
+    name: 'RED Design Screener',
+    href: '/tools/osmoflux-screener.html',
+    project: { label: 'OsmoFlux', href: '/research/osmotic-power' },
+    summary:
+      'Size and operate a reverse-electrodialysis stack on desalination concentrate: set the two outlet limits, dilute supply, membrane budget and retained power, and see what each design lever buys.',
+  },
+];
+
 // Watt Workshops programs. Single source for the nav flyout, the
 // homepage ledger, and the /workshops index. Add a program here
 // and it appears in all three. status: 'Enrolling' | 'Complete'.
